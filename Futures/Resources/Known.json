@@ -1,0 +1,106 @@
+{
+  "Markets": {
+    "CME US Index Futures ETH": {
+      "From": "-0.06:00:00.000",
+      "Until": "0.16:59:59.999"
+    },
+    "CBOT Interest Rate ETH": {
+      "From": "-0.06:00:00.000",
+      "Until": "0.16:59:59.999"
+    },
+    "Nymex Metals Energy ETH": {
+      "From": "-0.06:00:00.000",
+      "Until": "0.16:59:59.999"
+    }
+  },
+  "Assets": {
+    "CL": {
+      "Market": "Nymex Metals Energy ETH",
+      "Session": {
+        "From": "09:00",
+        "Until": "14:30"
+      },
+      "TickInUsd": 10.0,
+      "OneTick": 0.01,
+      "Months": "FGHJKMNQUVXZ",
+      "MicroSymbol": "MCL"
+    },
+    "ES": {
+      "Market": "CME US Index Futures ETH",
+      "Session": {
+        "From": "09:30",
+        "Until": "16:00"
+      },
+      "TickInUsd": 12.5,
+      "OneTick": 0.25,
+      "Months": "HMUZ",
+      "MicroSymbol": "MES"
+    },
+    "GC": {
+      "Market": "Nymex Metals Energy ETH",
+      "Session": {
+        "From": "09:30",
+        "Until": "13:00"
+      },
+      "TickInUsd": 10.0,
+      "OneTick": 0.1,
+      "Months": "GJMQVZ",
+      "MicroSymbol": "MGC"
+    },
+    "NG": {
+      "Market": "Nymex Metals Energy ETH",
+      "Session": {
+        "From": "09:30",
+        "Until": "16:00"
+      },
+      "TickInUsd": 2.5,
+      "OneTick": 0.00025,
+      "Months": "HMUZ",
+      "MicroSymbol": "QG"
+    },
+    "NQ": {
+      "Market": "CME US Index Futures ETH",
+      "Session": {
+        "From": "09:30",
+        "Until": "16:00"
+      },
+      "TickInUsd": 5.0,
+      "OneTick": 0.25,
+      "Months": "HMUZ",
+      "MicroSymbol": "MNQ"
+    },
+    "RTY": {
+      "Market": "CME US Index Futures ETH",
+      "Session": {
+        "From": "09:30",
+        "Until": "16:00"
+      },
+      "TickInUsd": 5.0,
+      "OneTick": 0.1,
+      "Months": "HMUZ",
+      "MicroSymbol": "M2K"
+    },
+    "ZB": {
+      "Market": "CBOT Interest Rate ETH",
+      "Session": {
+        "From": "07:00",
+        "Until": "11:00"
+      },
+      "TickInUsd": 31.25,
+      "OneTick": 0.01,
+      "Months": "HMUZ",
+      "MicroSymbol": "MZB"
+    },
+    "ZN": {
+      "Market": "CBOT Interest Rate ETH",
+      "Session": {
+        "From": "07:00",
+        "Until": "11:00"
+      },
+      "TickInUsd": 15.625,
+      "OneTick": 0.01,
+      "Months": "HMUZ",
+      "MicroSymbol": "MZN"
+    }
+  }
+}
