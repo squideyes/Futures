@@ -10,7 +10,7 @@ internal static class KnownHelper
         public double TickInUsd { get; set; }
         public float OneTick { get; set; }
         public string? Months { get; set; }
-        public Symbol MicroSymbol { get; set; }
+        public string? Description { get; set; }
         public string? Market { get; set; }
         public PeriodInfo? Session { get; set; }
     }
@@ -68,17 +68,14 @@ internal static class KnownHelper
 
             var ticksPerPoint = (int)(1.0f / data.OneTick);
 
-            Asset GetAsset(Symbol symbol, Symbol dataSymbol, bool isMicro)
+            Asset GetAsset(Symbol symbol)
             {
                 var tickInUsd = data.TickInUsd;
-
-                if (isMicro)
-                    tickInUsd /= 10.0;
 
                 return new Asset(digits)
                 {
                     Symbol = symbol,
-                    DataSymbol = dataSymbol,
+                    Description = data.Description,
                     OneTick = data.OneTick,
                     Digits = digits,
                     TickInUsd = Math.Round(tickInUsd, 2),
@@ -93,10 +90,7 @@ internal static class KnownHelper
                 };
             }
 
-            assets.Add(symbol, GetAsset(symbol, symbol, false));
-
-            assets.Add(data.MicroSymbol,
-                GetAsset(data.MicroSymbol, symbol, true));
+            assets.Add(symbol, GetAsset(symbol));
         }
 
         return assets;

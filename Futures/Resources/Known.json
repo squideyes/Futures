@@ -20,10 +20,10 @@
         "From": "09:00",
         "Until": "14:30"
       },
+      "Description": "Crude Oil Contract",
       "TickInUsd": 10.0,
       "OneTick": 0.01,
-      "Months": "FGHJKMNQUVXZ",
-      "MicroSymbol": "MCL"
+      "Months": "FGHJKMNQUVXZ"
     },
     "ES": {
       "Market": "CME US Index Futures ETH",
@@ -31,10 +31,10 @@
         "From": "09:30",
         "Until": "16:00"
       },
+      "Description": "E-Mini S&P 500 Contract",
       "TickInUsd": 12.5,
       "OneTick": 0.25,
-      "Months": "HMUZ",
-      "MicroSymbol": "MES"
+      "Months": "HMUZ"
     },
     "GC": {
       "Market": "Nymex Metals Energy ETH",
@@ -42,21 +42,10 @@
         "From": "09:30",
         "Until": "13:00"
       },
+      "Description": "Gold Contract",
       "TickInUsd": 10.0,
       "OneTick": 0.1,
-      "Months": "GJMQVZ",
-      "MicroSymbol": "MGC"
-    },
-    "NG": {
-      "Market": "Nymex Metals Energy ETH",
-      "Session": {
-        "From": "09:30",
-        "Until": "16:00"
-      },
-      "TickInUsd": 2.5,
-      "OneTick": 0.00025,
-      "Months": "HMUZ",
-      "MicroSymbol": "QG"
+      "Months": "GJMQZ"
     },
     "NQ": {
       "Market": "CME US Index Futures ETH",
@@ -64,43 +53,32 @@
         "From": "09:30",
         "Until": "16:00"
       },
+      "Description": "E-Mini NASDAQ 100 Contract",
       "TickInUsd": 5.0,
       "OneTick": 0.25,
-      "Months": "HMUZ",
-      "MicroSymbol": "MNQ"
+      "Months": "HMUZ"
     },
-    "RTY": {
-      "Market": "CME US Index Futures ETH",
-      "Session": {
-        "From": "09:30",
-        "Until": "16:00"
-      },
-      "TickInUsd": 5.0,
-      "OneTick": 0.1,
-      "Months": "HMUZ",
-      "MicroSymbol": "M2K"
-    },
-    "ZB": {
+    "TY": {
       "Market": "CBOT Interest Rate ETH",
       "Session": {
         "From": "07:00",
         "Until": "11:00"
       },
-      "TickInUsd": 31.25,
-      "OneTick": 0.01,
-      "Months": "HMUZ",
-      "MicroSymbol": "MZB"
-    },
-    "ZN": {
-      "Market": "CBOT Interest Rate ETH",
-      "Session": {
-        "From": "07:00",
-        "Until": "11:00"
-      },
+      "Description": "10 Year US Treasury Note Contract",
       "TickInUsd": 15.625,
       "OneTick": 0.01,
-      "Months": "HMUZ",
-      "MicroSymbol": "MZN"
+      "Months": "HMUZ"
+    },
+    "US": {
+      "Market": "CBOT Interest Rate ETH",
+      "Session": {
+        "From": "07:00",
+        "Until": "11:00"
+      },
+      "Description": "30 Year US Treasure Bond Contract",
+      "TickInUsd": 31.25,
+      "OneTick": 0.01,
+      "Months": "HMUZ"
     }
   }
 }

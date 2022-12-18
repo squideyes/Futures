@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Futures", "Futures\Futures.csproj", "{BDCFC68F-1293-4F78-AC68-D2AF675B93E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Futures", "Futures\Futures.csproj", "{BDCFC68F-1293-4F78-AC68-D2AF675B93E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{57DCCA57-E008-425B-813B-BB01253E28EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{57DCCA57-E008-425B-813B-BB01253E28EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TickSetMaker", "TickSetMaker\TickSetMaker.csproj", "{5B7642FC-09EF-4104-B67D-242A0E33448A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{57DCCA57-E008-425B-813B-BB01253E28EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57DCCA57-E008-425B-813B-BB01253E28EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57DCCA57-E008-425B-813B-BB01253E28EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B7642FC-09EF-4104-B67D-242A0E33448A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B7642FC-09EF-4104-B67D-242A0E33448A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B7642FC-09EF-4104-B67D-242A0E33448A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B7642FC-09EF-4104-B67D-242A0E33448A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

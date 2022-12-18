@@ -8,8 +8,6 @@ public class KnownTests
     [Fact]
     public void KnownAssets_Should_BeValid_AfterStaticConstruct()
     {
-        var csv = Known.GetContractsSpecs();
-
         var symbols = Enum.GetValues<Symbol>();
 
         Known.Assets.Count.Should().Be(symbols.Length);

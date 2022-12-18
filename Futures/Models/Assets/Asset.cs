@@ -10,8 +10,8 @@ public class Asset : IEquatable<Asset>
     }
 
     public Symbol Symbol { get; internal init; }
-    public Symbol DataSymbol { get; internal init; }
     public Market? Market { get; internal init; }
+    public string? Description { get; internal init; }
     public double TickInUsd { get; internal init; }
     public float OneTick { get; internal init; }
     public int Digits { get; internal init; }
@@ -20,10 +20,8 @@ public class Asset : IEquatable<Asset>
     public Period<TimeOnly> Session { get; internal set; }
     public SortedSet<Month>? Months { get; internal init; }
 
-    public bool IsMicro => DataSymbol != Symbol;
-
     public bool IsPrice(float value) =>
-        value >= OneTick && value % OneTick == 0.0f;
+        value >= OneTick && value == Round(value);
 
     public float Round(float value) =>
         MathF.Round(MathF.Round(value / OneTick) * OneTick, Digits);

@@ -9,19 +9,9 @@ public class ContractTests
     [InlineData(Symbol.CL)]
     [InlineData(Symbol.ES)]
     [InlineData(Symbol.GC)]
-    [InlineData(Symbol.M2K)]
-    [InlineData(Symbol.MCL)]
-    [InlineData(Symbol.MES)]
-    [InlineData(Symbol.MGC)]
-    [InlineData(Symbol.MNQ)]
-    [InlineData(Symbol.MZB)]
-    [InlineData(Symbol.MZN)]
-    [InlineData(Symbol.NG)]
     [InlineData(Symbol.NQ)]
-    [InlineData(Symbol.QG)]
-    [InlineData(Symbol.RTY)]
-    [InlineData(Symbol.ZB)]
-    [InlineData(Symbol.ZN)]
+    [InlineData(Symbol.TY)]
+    [InlineData(Symbol.US)]
     public void Contract_Should_Contain_ExpectedTradeDates(Symbol symbol)
     {
         var holidays = HolidayHelper.GetHolidays();

@@ -9,19 +9,6 @@ public readonly struct TickOn : IEquatable<TickOn>, IComparable<TickOn>
 
     private DateTime Value { get; }
 
-    public TradeDate TradeDate
-    {
-        get
-        {
-            var date = DateOnly.FromDateTime(Value);
-
-            if (Value.Hour >= 18)
-                date = date.AddDays(1);
-
-            return TradeDate.From(date);
-        }
-    }
-
     public int Year => Value.Year;
     public int Month => Value.Month;
     public int Day => Value.Day;
@@ -37,13 +24,25 @@ public readonly struct TickOn : IEquatable<TickOn>, IComparable<TickOn>
 
     public bool Equals(TickOn other) => Value.Equals(other.Value);
 
-    override public bool Equals(object? other) =>
+    public override bool Equals(object? other) =>
         other is TickOn tickOn && Equals(tickOn);
 
-    override public int GetHashCode() => Value.GetHashCode();
+    public override int GetHashCode() => Value.GetHashCode();
 
     public override string ToString() =>
         Value.ToString("MM/dd/yyyy HH:mm:ss.fff");
+
+    public TradeDate GetTradeDate(Asset asset)
+    {
+        asset.MayNot().BeNull();
+
+        var date = DateOnly.FromDateTime(Value);
+
+        if (Value.TimeOfDay > asset.Market.Period.Until)
+            date = date.AddDays(1);
+
+        return TradeDate.From(date);
+    }
 
     public static TickOn Parse(string value) =>
         From(DateTime.Parse(value));
