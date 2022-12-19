@@ -7,7 +7,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Futures", "Futures\Futures.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{57DCCA57-E008-425B-813B-BB01253E28EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TickSetMaker", "TickSetMaker\TickSetMaker.csproj", "{5B7642FC-09EF-4104-B67D-242A0E33448A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TickSetMaker", "TickSetMaker\TickSetMaker.csproj", "{5B7642FC-09EF-4104-B67D-242A0E33448A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{C11C5D5E-6F96-49B7-99AB-A1D98D088F57}"
+	ProjectSection(SolutionItems) = preProject
+		CONTRIBUTING.md = CONTRIBUTING.md
+		Futures.sln.headertext = Futures.sln.headertext
+		LICENSE.md = LICENSE.md
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{BBBB384B-5A82-4E4C-B949-9580632959D6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{FA58A071-6CCA-4404-88FF-E58CFE0B4C10}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D3B5AF16-1AA9-4364-9BDF-3CDE5DFC7FCB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +44,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BDCFC68F-1293-4F78-AC68-D2AF675B93E1} = {BBBB384B-5A82-4E4C-B949-9580632959D6}
+		{57DCCA57-E008-425B-813B-BB01253E28EE} = {D3B5AF16-1AA9-4364-9BDF-3CDE5DFC7FCB}
+		{5B7642FC-09EF-4104-B67D-242A0E33448A} = {FA58A071-6CCA-4404-88FF-E58CFE0B4C10}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B6A613A2-FAA4-4B4E-9F0E-DF9F934B32A0}
