@@ -4,6 +4,10 @@ namespace SquidEyes.Futures;
 
 internal static class MiscExtenders
 {
+    public static R AsFunc<V, R>(this V value, Func<V, R> func) => func(value);
+
+    public static void AsAction<T>(this T value, Action<T> act) => act(value);
+
     public static void EnsurePathExists(this string fileName)
     {
         var path = Path.GetDirectoryName(fileName);

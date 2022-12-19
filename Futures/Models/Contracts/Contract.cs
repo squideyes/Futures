@@ -1,3 +1,4 @@
+using System.Diagnostics.Contracts;
 using System.Text.RegularExpressions;
 
 namespace SquidEyes.Futures;
@@ -20,16 +21,13 @@ public partial class Contract : IEquatable<Contract>, IComparable<Contract>
         Month = month;
         Year = year;
 
+        var contractMonths = asset.GetContractMonths(month);
+
         var current = GetRollDate(month, year);
 
-        DateOnly prior;
-
-        var index = asset.Months!.ToList().IndexOf(month);
-
-        if (index == 0)
-            prior = GetRollDate(asset.Months!.Last(), --year);
-        else
-            prior = GetRollDate(month - (12 / asset.Months!.Count), year);
+        var prior = new DateTime(year, (int)month, 1)
+            .AddMonths(-contractMonths)
+            .AsFunc(d => GetRollDate((Month)d.Month, d.Year));
 
         for (var date = prior; date < current; date = date.AddDays(1))
         {
@@ -61,7 +59,7 @@ public partial class Contract : IEquatable<Contract>, IComparable<Contract>
 
     private (Asset, Month, int) AsTuple() => (Asset, Month, Year);
 
-    public static Contract Parse(string value)
+    internal static Contract Parse(string value)
     {
         var match = parser.Match(value);
 

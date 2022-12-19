@@ -1,7 +1,11 @@
-﻿using SquidEyes.Futures.TickSetMaker;
+﻿using SquidEyes.Futures;
+using SquidEyes.Futures.TickSetMaker;
 
-const string KIBOT_DATA = @"C:\ProgramData\Kibot Agent\Data";
+//var specs = Known.GetContractsSpecs();
 
-var builder = new KibotBuilder(KIBOT_DATA);
+//Console.WriteLine(specs);
 
-builder.Parse();
+//Console.ReadKey();
+
+KibotParser.ParseAndSave(
+    @"C:\ProgramData\Kibot Agent\Data", 2022, true);

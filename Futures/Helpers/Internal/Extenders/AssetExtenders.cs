@@ -12,5 +12,17 @@ internal static class AssetExtenders
     public static Month ToMonth(this char value) =>
         (Month)(MONTH_CODES.IndexOf(value) + 1);
 
+    public static int GetContractMonths(this Asset asset, Month month)
+    {
+        var months = asset.Months!.ToList();
+
+        var index = months.IndexOf(month);
+
+        if (index > 0)
+            return month - months[index - 1];
+        else
+            return (int)months[0] + (MONTH_CODES.Length - (int)months.Last());
+    }
+
     public static Month ToMonth(this string value) => ToMonth(value[0]);
 }

@@ -6,6 +6,28 @@ namespace SquidEyes.UnitTests;
 public class ContractTests
 {
     [Theory]
+    [InlineData(Symbol.CL, "1,1,1,1,1,1,1,1,1,1,1,1")]
+    [InlineData(Symbol.ES, "3,3,3,3")]
+    [InlineData(Symbol.GC, "2,2,2,2,4")]
+    [InlineData(Symbol.NQ, "3,3,3,3")]
+    [InlineData(Symbol.TY, "3,3,3,3")]
+    [InlineData(Symbol.US, "3,3,3,3")]
+    public void GetContractMonths_Should_Return_ExpectedMonths(
+        Symbol symbol, string expectedString)
+    {
+        var asset = Known.Assets[symbol];
+
+        var expected = expectedString.Split(',').Select(int.Parse).ToList();
+
+        var months = asset.Months!.ToList();
+
+        months.Count.Should().Be(expected.Count);
+
+        for (var i = 0; i < months.Count; i++)
+            asset.GetContractMonths(months[i]).Should().Be(expected[i]);
+    }
+
+    [Theory]
     [InlineData(Symbol.CL)]
     [InlineData(Symbol.ES)]
     [InlineData(Symbol.GC)]

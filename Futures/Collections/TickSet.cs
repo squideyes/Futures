@@ -18,7 +18,7 @@ public class TickSet : IEnumerable<Tick>
             Func<Period<TimeSpan>, TimeSpan> getTimeSpan)
         {
             return TickOn.From(tradeDate.AsDateTime()
-                .Add(contract.Asset.Market!.Period.From));
+                .Add(getTimeSpan(contract.Asset.Market!.Period)));
         }
 
         MinTickOn = GetTickOn(Contract.TradeDates.First(), p => p.From);
@@ -56,7 +56,8 @@ public class TickSet : IEnumerable<Tick>
     {
         basePath.MayNot().BeNullOrWhitespace();
 
-        return Path.Combine(basePath, Contract.Asset.ToString(), 
+        return Path.Combine(basePath, "TickSets", 
+            Contract.Asset.ToString(), 
             Contract.Year.ToString(), FileName);
     }
 

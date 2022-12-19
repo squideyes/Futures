@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Text;
 
 namespace SquidEyes.Futures;
 
@@ -15,38 +16,38 @@ public static class Known
     public static IReadOnlyDictionary<Symbol, Asset> Assets { get; }
     public static IReadOnlyDictionary<Asset, List<Contract>> Contracts { get; }
 
-    //public static string GetContractsSpecs()
-    //{
-    //    var sb = new StringBuilder();
+    public static string GetContractsSpecs()
+    {
+        var sb = new StringBuilder();
 
-    //    var yesterday = DateTime.Today;
+        var yesterday = DateTime.Today;
 
-    //    foreach (var asset in Assets.Values.Where(a => !a.IsMicro))
-    //    {
-    //        foreach (var contract in Contracts[asset])
-    //        {
-    //            var until = contract.TradeDates.Last().AsDateTime();
+        foreach (var asset in Assets.Values)
+        {
+            foreach (var contract in Contracts[asset])
+            {
+                var until = contract.TradeDates.Last().AsDateTime();
 
-    //            if (until >= yesterday)
-    //                continue;
+                if (until >= yesterday)
+                    continue;
 
-    //            var from = contract.TradeDates.First()
-    //                .AsDateTime().Add(asset.Market!.Period.From);
+                var from = contract.TradeDates.First()
+                    .AsDateTime().Add(asset.Market!.Period.From);
 
-    //            until = until.Add(asset.Market.Period.Until);
+                until = until.Add(asset.Market.Period.Until);
 
-    //            sb.Append(asset.Symbol);
-    //            sb.AppendDelimited(((int)contract.Month).ToString("00"));
-    //            sb.AppendDelimited(contract.Year);
-    //            sb.AppendDelimited(contract);
-    //            sb.AppendDelimited(from.ToString("MM/dd/yyyy HH:mm:ss.fff"));
-    //            sb.AppendDelimited(until.ToString("MM/dd/yyyy HH:mm:ss.fff"));
-    //            sb.AppendLine();
-    //        }
-    //    }
+                sb.Append(asset.Symbol);
+                sb.AppendDelimited(((int)contract.Month).ToString("00"));
+                sb.AppendDelimited(contract.Year);
+                sb.AppendDelimited(contract);
+                sb.AppendDelimited(from.ToString("MM/dd/yyyy HH:mm:ss.fff"));
+                sb.AppendDelimited(until.ToString("MM/dd/yyyy HH:mm:ss.fff"));
+                sb.AppendLine();
+            }
+        }
 
-    //    return sb.ToString();
-    //}
+        return sb.ToString();
+    }
 
     private static ImmutableSortedDictionary<DateOnly, TradeDate> GetTradeDates()
     {

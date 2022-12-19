@@ -22,14 +22,9 @@ public readonly struct Tick : IEquatable<Tick>, IComparable<Tick>
     public static Tick From(
         Asset asset, int tickId, TickOn tickOn, float price)
     {
-        if (tickId < 0)
-            throw new ArgumentOutOfRangeException(nameof(tickId));
-
-        if (tickOn.IsDefault())
-            throw new ArgumentOutOfRangeException(nameof(tickOn));
-
-        if (!asset.IsPrice(price))
-            throw new ArgumentOutOfRangeException(nameof(price));
+        tickId.Must().BePositiveOrZero();
+        tickOn.MayNot().BeDefault();
+        asset.Must().Be(v => v.IsPrice(price));
 
         return new Tick(tickId, tickOn, price);
     }
