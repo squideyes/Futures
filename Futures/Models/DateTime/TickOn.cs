@@ -43,7 +43,7 @@ public readonly struct TickOn : IEquatable<TickOn>, IComparable<TickOn>
 
         var date = DateOnly.FromDateTime(Value);
 
-        if (Value.TimeOfDay > asset.Market.Period.Until)
+        if (Value.TimeOfDay > asset.Market!.Period.Until)
             date = date.AddDays(1);
 
         return TradeDate.From(date);
