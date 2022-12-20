@@ -3,13 +3,11 @@
 // of the MIT License (https://opensource.org/licenses/MIT)
 // ********************************************************
 
-using System;
-using System.Data.SqlTypes;
 using System.Numerics;
 
 namespace SquidEyes.Futures;
 
-public static class BasicValidators
+internal static class BasicValidators
 {
     public static T BeDefault<T>(this Must<T> m)
     {
