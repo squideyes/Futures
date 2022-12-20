@@ -16,10 +16,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: 'Checkout'
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: 'Install DOTNET'
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v2
       with:
         dotnet-version: '7.0.x'
         include-prerelease: true
@@ -32,7 +32,7 @@ jobs:
 
     - name: 'Get Version'
       id: version
-      uses: battila7/get-version-action@v2
+      uses: battila7/get-version-action@v3
 
     - name: 'Pack Project'
       run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols -p:PackageVersion=${{ steps.version.outputs.version-without-v }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
