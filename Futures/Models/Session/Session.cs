@@ -1,8 +1,7 @@
-﻿// ************************************************************************
-// Copyright (C) 2022 SquidEyes, LLC - All Rights Reserved
-// Proprietary and confidential
-// Unauthorized copying of this file, via any medium is strictly prohibited
-// ************************************************************************
+// ********************************************************
+// The use of this source code is licensed under the terms
+// of the MIT License (https://opensource.org/licenses/MIT)
+// ********************************************************
 
 using System.Text.Json.Serialization;
 
