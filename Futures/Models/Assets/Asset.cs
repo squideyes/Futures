@@ -28,7 +28,7 @@ public class Asset : IEquatable<Asset>
     public bool IsPrice(float value) =>
         value >= OneTick && value == Round(value);
 
-    internal float Round(float value)
+    public float Round(float value)
     {
         return (float)Math.Round(Math.Round(
             (double)value / OneTick) * OneTick, Digits);
