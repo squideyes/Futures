@@ -3,7 +3,6 @@
 // of the MIT License (https://opensource.org/licenses/MIT)
 // ********************************************************
 
-using System.Diagnostics.Contracts;
 using System.Text.RegularExpressions;
 
 namespace SquidEyes.Futures;

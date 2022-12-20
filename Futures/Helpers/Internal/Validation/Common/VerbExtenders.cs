@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace SquidEyes.Futures;
 
-public static class VerbExtenders
+internal static class VerbExtenders
 {
     public static Must<T> Must<T>(this T value, Func<T, bool> canEval = null!,
         [CallerArgumentExpression(nameof(value))] string argName = null!)

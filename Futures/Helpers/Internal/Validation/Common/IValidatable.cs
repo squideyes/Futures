@@ -5,7 +5,7 @@
 
 namespace SquidEyes.Futures;
 
-public interface IValidatable
+internal interface IValidatable
 {
     void Validate();
 }

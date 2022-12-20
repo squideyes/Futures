@@ -5,7 +5,7 @@
 
 namespace SquidEyes.Futures;
 
-public class VerbException : ArgumentException
+internal class VerbException : ArgumentException
 {
     public VerbException(string argame, string message)
         : base($"{message} (Argument: \"{argame}\")")

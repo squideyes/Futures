@@ -5,7 +5,7 @@
 
 namespace SquidEyes.Futures;
 
-public abstract class VerbBase<T, M>
+internal abstract class VerbBase<T, M>
     where M : VerbBase<T, M>
 {
     private readonly Func<T, bool> canEval;
