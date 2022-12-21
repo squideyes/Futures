@@ -8,20 +8,45 @@ using System.Text;
 
 namespace SquidEyes.Futures;
 
+using CBATD = Dictionary<(Asset, TradeDate), Contract>;
+
 public static class Known
 {
+    private static readonly CBATD cbatd;
+
     static Known()
     {
-        TradeDates = GetTradeDates();
+        TradeDates = KnownHelper.GetTradeDates();
         Assets = KnownHelper.GetAssets();
-        Contracts = GetContracts();
+        Contracts = KnownHelper.GetContracts(Assets.Values.ToList());
+
+        cbatd = GetContractsByAssetTradeDate();
     }
 
     public static ImmutableSortedDictionary<DateOnly, TradeDate> TradeDates { get; }
     public static IReadOnlyDictionary<Symbol, Asset> Assets { get; }
     public static IReadOnlyDictionary<Asset, List<Contract>> Contracts { get; }
 
-    public static string GetContractsSpecs()
+    public static Contract GetContract(Asset asset, TradeDate tradeDate) =>
+        cbatd[(asset, tradeDate)];
+
+    private static CBATD GetContractsByAssetTradeDate()
+    {
+        var cbatd = new CBATD();
+
+        foreach (var asset in Assets.Values)
+        {
+            foreach (var contract in Contracts[asset])
+            {
+                foreach (var tradeDate in contract.TradeDates)
+                    cbatd.Add((asset, tradeDate), contract);
+            }
+        }
+
+        return cbatd;
+    }
+
+    private static string GetContractsSpecs()
     {
         var sb = new StringBuilder();
 
@@ -52,44 +77,5 @@ public static class Known
         }
 
         return sb.ToString();
-    }
-
-    private static ImmutableSortedDictionary<DateOnly, TradeDate> GetTradeDates()
-    {
-        var holidays = HolidayHelper.GetHolidays();
-
-        var dates = new List<DateOnly>();
-
-        for (var date = TradeDate.MinValue;
-            date <= TradeDate.MaxValue; date = date.AddDays(1))
-        {
-            if (date.IsWeekDay() && !holidays.Contains(date))
-                dates.Add(date);
-        }
-
-        return dates.ToImmutableSortedDictionary(d => d, d => new TradeDate(d));
-    }
-
-    private static Dictionary<Asset, List<Contract>> GetContracts()
-    {
-        static List<Contract> GetContracts(Asset asset)
-        {
-            var contracts = new List<Contract>();
-
-            for (int year = Contract.MinYear; year <= Contract.MaxYear; year++)
-            {
-                foreach (var month in asset.Months!)
-                    contracts.Add(new Contract(asset, month, year));
-            }
-
-            return contracts;
-        }
-
-        var contracts = new Dictionary<Asset, List<Contract>>();
-
-        foreach (var asset in Assets.Values)
-            contracts.Add(asset, GetContracts(asset));
-
-        return contracts;
     }
 }

@@ -3,6 +3,7 @@
 // of the MIT License (https://opensource.org/licenses/MIT)
 // ********************************************************
 
+using System.Collections.Immutable;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -100,6 +101,46 @@ internal static class KnownHelper
 
         return assets;
     }
+
+    public static ImmutableSortedDictionary<DateOnly, TradeDate> GetTradeDates()
+    {
+        var holidays = HolidayHelper.GetHolidays();
+
+        var dates = new List<DateOnly>();
+
+        for (var date = TradeDate.MinValue;
+            date <= TradeDate.MaxValue; date = date.AddDays(1))
+        {
+            if (date.IsWeekDay() && !holidays.Contains(date))
+                dates.Add(date);
+        }
+
+        return dates.ToImmutableSortedDictionary(d => d, d => new TradeDate(d));
+    }
+
+    public static Dictionary<Asset, List<Contract>> GetContracts(List<Asset> assets)
+    {
+        static List<Contract> GetContracts(Asset asset)
+        {
+            var contracts = new List<Contract>();
+
+            for (int year = Contract.MinYear; year <= Contract.MaxYear; year++)
+            {
+                foreach (var month in asset.Months!)
+                    contracts.Add(new Contract(asset, month, year));
+            }
+
+            return contracts;
+        }
+
+        var contracts = new Dictionary<Asset, List<Contract>>();
+
+        foreach (var asset in assets)
+            contracts.Add(asset, GetContracts(asset));
+
+        return contracts;
+    }
+
 
     private static string GetJson()
     {
