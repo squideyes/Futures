@@ -103,9 +103,13 @@ internal static class KnownHelper
 
     private static string GetJson()
     {
-        return """
-                        {
+        return """ 
+            {
               "Markets": {
+                "CME FX Futures ETH": {
+                  "From": "-0.06:00:00.000",
+                  "Until": "0.16:59:59.999"
+                },
                 "CME US Index Futures ETH": {
                   "From": "-0.06:00:00.000",
                   "Until": "0.16:59:59.999"
@@ -142,6 +146,17 @@ internal static class KnownHelper
                   "OneTick": 0.25,
                   "Months": "HMUZ"
                 },
+                "EU": {
+                  "Market": "CME FX Futures ETH",
+                  "Session": {
+                    "From": "08:00",
+                    "Until": "12:00"
+                  },
+                  "Description": "EURO FX Futures",
+                  "TickInUsd": 6.25,
+                  "OneTick": 0.00005,
+                  "Months": "HMUZ"
+                },
                 "GC": {
                   "Market": "Nymex Metals Energy ETH",
                   "Session": {
@@ -152,6 +167,17 @@ internal static class KnownHelper
                   "TickInUsd": 10.0,
                   "OneTick": 0.1,
                   "Months": "GJMQZ"
+                },
+                "JY": {
+                  "Market": "CME FX Futures ETH",
+                  "Session": {
+                    "From": "07:00",
+                    "Until": "10:00"
+                  },
+                  "Description": "Japanese Yen FX Futures",
+                  "TickInUsd": 6.25,
+                  "OneTick": 0.0000005,
+                  "Months": "HMUZ"
                 },
                 "NQ": {
                   "Market": "CME US Index Futures ETH",

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TickSetMaker": {
+      "commandName": "Project",
+      "commandLineArgs": "--source=\"C:\\ProgramData\\Kibot Agent\\Data\" --symbols=EU,JY"
+    }
+  }
+}

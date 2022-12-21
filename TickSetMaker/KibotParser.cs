@@ -3,43 +3,20 @@
 // of the MIT License (https://opensource.org/licenses/MIT)
 // ********************************************************
 
-namespace SquidEyes.Futures.TickSetMaker;
+using SquidEyes.Futures;
+
+namespace SquidEyes.TickSetMaker;
+
+using Lookup = Dictionary<Symbol, Dictionary<TradeDate, Contract>>;
 
 internal static class KibotParser
 {
-    public static void ParseAndSave(string dataPath, int maxYear, bool overwrite)
+    public static void ParseAndSave(
+        string source, string target, List<Symbol> symbols)
     {
-        var basePath = Path.Combine(Environment.GetFolderPath(
-            Environment.SpecialFolder.MyDocuments), "KibotData");
+        var (lookup, total) = GetLookupAndTotal(symbols);
 
-        var lookup = new Dictionary<Symbol, Dictionary<TradeDate, Contract>>();
-
-        int total = 0;
         int count = 0;
-
-        var symbols = Enum.GetValues<Symbol>();
-
-        foreach (var symbol in symbols)
-        {
-            lookup.Add(symbol, new Dictionary<TradeDate, Contract>());
-
-            var contracts = Known.Contracts[Known.Assets[symbol]];
-
-            var dict = new Dictionary<TradeDate, Contract>();
-
-            foreach (var contract in contracts)
-            {
-                if (contract.Year > maxYear)
-                    break;
-
-                foreach (var tradeDate in contract.TradeDates)
-                {
-                    total++;
-
-                    lookup[symbol].Add(tradeDate, contract);
-                }
-            }
-        }
 
         foreach (var symbol in symbols)
         {
@@ -47,7 +24,7 @@ internal static class KibotParser
 
             var contracts = Known.Contracts[asset];
 
-            var fileName = Path.Join(dataPath, symbol + ".txt");
+            var fileName = Path.Join(source, symbol + ".txt");
 
             using var reader = new StreamReader(fileName);
 
@@ -87,15 +64,15 @@ internal static class KibotParser
                 {
                     var prefix = $"{++count:00000} of {total:00000} - ";
 
-                    var fullPath = tickSet.GetFullPath(basePath);
+                    var fullPath = tickSet.GetFullPath(target);
 
-                    if (!overwrite && File.Exists(fullPath))
+                    if (File.Exists(fullPath))
                     {
                         Console.WriteLine($"{prefix}SKIPPED {tickSet}");
                     }
                     else
                     {
-                        tickSet.Save(basePath);
+                        tickSet.Save(target);
 
                         Console.WriteLine($"{prefix}SAVED {tickSet} ({tickSet.Count:N0} Ticks)");
                     }
@@ -110,5 +87,39 @@ internal static class KibotParser
                 tickSet!.Add(tick);
             }
         }
+    }
+
+    private static (Lookup, int) GetLookupAndTotal(List<Symbol> symbols)
+    {
+        var lookup = new Lookup();
+
+        int total = 0;
+
+        var yesterday = TradeDate.From(DateOnly.FromDateTime(
+            DateTime.UtcNow.ToEasternFromUtc().AddDays(-1)));
+
+        foreach (var symbol in symbols)
+        {
+            lookup.Add(symbol, new Dictionary<TradeDate, Contract>());
+
+            var contracts = Known.Contracts[Known.Assets[symbol]];
+
+            var dict = new Dictionary<TradeDate, Contract>();
+
+            foreach (var contract in contracts)
+            {
+                if (contract.TradeDates.Last() > yesterday)
+                    break;
+
+                foreach (var tradeDate in contract.TradeDates)
+                {
+                    total++;
+
+                    lookup[symbol].Add(tradeDate, contract);
+                }
+            }
+        }
+
+        return (lookup, total);
     }
 }

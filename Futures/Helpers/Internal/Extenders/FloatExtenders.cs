@@ -5,15 +5,23 @@
 
 namespace SquidEyes.Futures;
 
-internal static class FloatExtenders
+public static class FloatExtenders
 {
     public static int GetDigits(this float value)
     {
-        int digits = 0;
+        var precision = 0;
 
-        while (MathF.Round(value, digits) != value)
-            digits++;
+        var number = Math.Round(value, 8);
 
-        return digits;
+        while (number * Math.Pow(10, precision) !=
+            Math.Round(number * Math.Pow(10, precision)))
+        {
+            precision++;
+
+            if (precision == 8)
+                throw new ArgumentOutOfRangeException(nameof(value));
+        }
+
+        return precision;
     }
 }

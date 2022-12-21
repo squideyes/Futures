@@ -9,7 +9,9 @@ public enum Symbol
 {
     CL = 1,
     ES,
+    EU,
     GC,
+    JY,
     NQ,
     TY,
     US
