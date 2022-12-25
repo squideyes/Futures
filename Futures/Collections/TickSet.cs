@@ -19,15 +19,14 @@ public class TickSet : IEnumerable<Tick>
         Contract = contract.MayNot().BeNull();
         TradeDate = tradeDate.MayNot().BeDefault();
 
-        //TickOn GetTickOn(TradeDate tradeDate,
-        //    Func<SessionSpan, TimeSpan> getTimeSpan)
-        //{
-        //    return TickOn.From(tradeDate.AsDateTime()
-        //        .Add(getTimeSpan(contract.Asset.Market!.Period)));
-        //}
+        TickOn GetTickOn(TradeDate tradeDate, Func<Market, TimeSpan> getTimeSpan)
+        {
+            return TickOn.From(tradeDate.AsDateTime()
+                .Add(getTimeSpan(contract.Asset.Market!)));
+        }
 
-        //MinTickOn = GetTickOn(Contract.TradeDates.First(), p => p.From);
-        //MaxTickOn = GetTickOn(Contract.TradeDates.Last(), p => p.Until);
+        MinTickOn = GetTickOn(Contract.TradeDates.First(), p => p.From);
+        MaxTickOn = GetTickOn(Contract.TradeDates.Last(), p => p.Until);
     }
 
     public Source Source { get; }
@@ -40,20 +39,8 @@ public class TickSet : IEnumerable<Tick>
 
     public Tick this[int index] => ticks[index];
 
-    public string FileName
-    {
-        get
-        {
-            var sb = new StringBuilder();
-
-            sb.Append(Source.ToCode());
-            sb.AppendDelimited(Contract.Asset, '_');
-            sb.AppendDelimited(TradeDate.ToString("yyyyMMdd"), '_');
-            sb.Append("_TP_EST.stps");
-
-            return sb.ToString();
-        }
-    }
+    public string FileName =>
+        GetFileName(Source, Contract, TradeDate);
 
     public override string ToString() => FileName;
 
@@ -61,8 +48,8 @@ public class TickSet : IEnumerable<Tick>
     {
         basePath.MayNot().BeNullOrWhitespace();
 
-        return Path.Combine(basePath, "TickSets", 
-            Contract.Asset.ToString(), 
+        return Path.Combine(basePath, "TickSets",
+            Contract.Asset.ToString(),
             Contract.Year.ToString(), FileName);
     }
 
@@ -173,6 +160,19 @@ public class TickSet : IEnumerable<Tick>
         }
 
         return tickSet;
+    }
+
+    public static string GetFileName(
+        Source source, Contract contract, TradeDate tradeDate)
+    {
+        var sb = new StringBuilder();
+
+        sb.Append(source.ToCode());
+        sb.AppendDelimited(contract.Asset, '_');
+        sb.AppendDelimited(tradeDate.ToString("yyyyMMdd"), '_');
+        sb.Append("_TP_EST.stps");
+
+        return sb.ToString();
     }
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
