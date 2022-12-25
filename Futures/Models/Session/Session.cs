@@ -4,6 +4,7 @@
 // ********************************************************
 
 using System.Text.Json.Serialization;
+using static System.TimeOnly;
 
 namespace SquidEyes.Futures;
 
@@ -17,27 +18,25 @@ public class Session : IEquatable<Session>
     private Session(Asset asset, TradeDate tradeDate,
         int preNewsMinutes, int postNewsMinutes, int eosNoInvestMinutes)
     {
-        MinTimeOnly = TimeOnly.FromTimeSpan(asset.Market!.Period.From);
-        MaxTimeOnly = TimeOnly.FromTimeSpan(asset.Market!.Period.Until);
-
         TradeDate = tradeDate;
-
         this.preNewsMinutes = preNewsMinutes;
         this.postNewsMinutes = postNewsMinutes;
 
-        MinDateTime = tradeDate.AsDateTime().Add(asset.Market.Period.From);
-
+        MinDateTime = tradeDate.AsDateTime().Add(
+            asset.Stretch.From.ToTimeSpan());
         MinTickOn = TickOn.From(MinDateTime);
+        MinTimeOnly = FromDateTime(MinDateTime);
 
-        MaxDateTime = tradeDate.AsDateTime().Add(asset.Market.Period.Until);
-
+        MaxDateTime = tradeDate.AsDateTime().Add(
+            asset.Stretch.Until.ToTimeSpan());
         MaxTickOn = TickOn.From(MaxDateTime);
+        MaxTimeOnly = FromDateTime(MaxDateTime);
 
         var from = MaxDateTime.Add(TimeSpan.FromMilliseconds(1))
             .AddMinutes(-eosNoInvestMinutes);
 
-        AddEmbargo(TimeOnly.FromDateTime(from), 
-            TimeOnly.FromDateTime(MaxDateTime), "EOS No-Invest");
+        AddEmbargo(FromDateTime(from), 
+            FromDateTime(MaxDateTime), "EOS No-Invest");
     }
 
     public TradeDate TradeDate { get; }

@@ -35,22 +35,23 @@ public class Embargo
     {
         return new Embargo()
         {
-            Kind = kind.Must().BeEnumValue(),
-            Name = name.MayNot().BeNullOrWhitespace(),
+            Kind = kind,
+            Name = name,
             From = from,
-            Until = until.Add(TimeSpan.FromMilliseconds(999)),
+            Until = until
         };
     }
 
-    internal static Embargo Create(
-        string name, TimeOnly anchor, int preNewsMinutes, int postNewsMinutes)
+    internal static Embargo Create(string name, 
+        TimeOnly anchor, int preNewsMinutes, int postNewsMinutes)
     {
         return new Embargo()
         {
             Kind = NewsEvent,
             Name = name,
             From = anchor.Add(-TimeSpan.FromMinutes(preNewsMinutes)),
-            Until = anchor.Add(new TimeSpan(0, 0, postNewsMinutes, 59, 999))
+            Until = anchor.Add(
+                new TimeSpan(0, 0, postNewsMinutes - 1, 59, 999))
         };
     }
 }

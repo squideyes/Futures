@@ -43,7 +43,7 @@ public readonly struct TickOn : IEquatable<TickOn>, IComparable<TickOn>
 
         var date = DateOnly.FromDateTime(Value);
 
-        if (Value.TimeOfDay > asset.Market!.Period.Until)
+        if (Value.TimeOfDay > asset.Market!.Until)
             date = date.AddDays(1);
 
         return TradeDate.From(date);
@@ -57,8 +57,7 @@ public readonly struct TickOn : IEquatable<TickOn>, IComparable<TickOn>
 
     public static TickOn From(DateTime value)
     {
-        if (!IsValue(value))
-            throw new ArgumentOutOfRangeException(nameof(value));
+        value.Must().Be(v => IsValue(v));
 
         return new TickOn(value);
     }
@@ -72,22 +71,20 @@ public readonly struct TickOn : IEquatable<TickOn>, IComparable<TickOn>
 
     public static bool IsValue(DateTime value)
     {
-        //DateOnly date;
+        DateOnly date;
 
-        //if (value.Hour >= 18)
-        //    date = DateOnly.FromDateTime(value.Date.AddDays(1));
-        //else
-        //    date = DateOnly.FromDateTime(value.Date);
+        if (value.Hour >= 18)
+            date = DateOnly.FromDateTime(value.Date.AddDays(1));
+        else
+            date = DateOnly.FromDateTime(value.Date);
 
-        //if (!Known.TradeDates.ContainsKey(date))
-        //    return false;
+        if (!Known.TradeDates.ContainsKey(date))
+            return false;
 
-        //var dateTime = date.ToDateTime(TimeOnly.MinValue);
+        var dateTime = date.ToDateTime(TimeOnly.MinValue);
 
-        //return value >= dateTime.AddHours(-6)
-        //    && value < dateTime.AddHours(17);
-
-        return true;
+        return value >= dateTime.AddHours(-6)
+            && value < dateTime.AddHours(17);
     }
 
     public static bool operator ==(TickOn lhs, TickOn rhs) =>

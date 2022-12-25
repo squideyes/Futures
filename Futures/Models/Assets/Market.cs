@@ -7,6 +7,14 @@ namespace SquidEyes.Futures;
 
 public class Market
 {
-    public required string Name { get; init; }
-    public required Period<TimeSpan> Period { get; init;  }
+    internal Market(string name)
+    {
+        Name = name;
+        From = -TimeSpan.FromHours(6);
+        Until = new TimeSpan(0, 16, 59, 59, 999);
+    }
+
+    public string Name { get; }
+    public TimeSpan From { get; }
+    public TimeSpan Until { get; }
 }

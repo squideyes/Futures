@@ -19,15 +19,15 @@ public class TickSet : IEnumerable<Tick>
         Contract = contract.MayNot().BeNull();
         TradeDate = tradeDate.MayNot().BeDefault();
 
-        TickOn GetTickOn(TradeDate tradeDate,
-            Func<Period<TimeSpan>, TimeSpan> getTimeSpan)
-        {
-            return TickOn.From(tradeDate.AsDateTime()
-                .Add(getTimeSpan(contract.Asset.Market!.Period)));
-        }
+        //TickOn GetTickOn(TradeDate tradeDate,
+        //    Func<SessionSpan, TimeSpan> getTimeSpan)
+        //{
+        //    return TickOn.From(tradeDate.AsDateTime()
+        //        .Add(getTimeSpan(contract.Asset.Market!.Period)));
+        //}
 
-        MinTickOn = GetTickOn(Contract.TradeDates.First(), p => p.From);
-        MaxTickOn = GetTickOn(Contract.TradeDates.Last(), p => p.Until);
+        //MinTickOn = GetTickOn(Contract.TradeDates.First(), p => p.From);
+        //MaxTickOn = GetTickOn(Contract.TradeDates.Last(), p => p.Until);
     }
 
     public Source Source { get; }
