@@ -11,11 +11,15 @@ namespace SquidEyes.UnitTests;
 public class ContractTests
 {
     [Theory]
+    [InlineData(Symbol.BP, "3,3,3,3")]
     [InlineData(Symbol.CL, "1,1,1,1,1,1,1,1,1,1,1,1")]
     [InlineData(Symbol.ES, "3,3,3,3")]
+    [InlineData(Symbol.EU, "3,3,3,3")]
     [InlineData(Symbol.GC, "2,2,2,2,2,2")]
+    [InlineData(Symbol.JY, "3,3,3,3")]
     [InlineData(Symbol.NQ, "3,3,3,3")]
     [InlineData(Symbol.ZB, "3,3,3,3")]
+    [InlineData(Symbol.ZF, "3,3,3,3")]
     [InlineData(Symbol.ZN, "3,3,3,3")]
     public void GetContractMonths_Should_Return_ExpectedMonths(
         Symbol symbol, string expectedString)
@@ -33,11 +37,15 @@ public class ContractTests
     }
 
     [Theory]
+    [InlineData(Symbol.BP)]
     [InlineData(Symbol.CL)]
     [InlineData(Symbol.ES)]
+    [InlineData(Symbol.EU)]
     [InlineData(Symbol.GC)]
+    [InlineData(Symbol.JY)]
     [InlineData(Symbol.NQ)]
     [InlineData(Symbol.ZB)]
+    [InlineData(Symbol.ZF)]
     [InlineData(Symbol.ZN)]
     public void Contract_Should_Contain_ExpectedTradeDates(Symbol symbol)
     {
@@ -81,22 +89,22 @@ public class ContractTests
     }
 
     [Theory]
-    [InlineData(2020, Month.January, "01/13/2020")]
-    [InlineData(2020, Month.February, "02/17/2020")]
-    [InlineData(2020, Month.March, "03/16/2020")]
-    [InlineData(2020, Month.April, "04/13/2020")]
-    [InlineData(2020, Month.May, "05/18/2020")]
-    [InlineData(2020, Month.June, "06/15/2020")]
-    [InlineData(2020, Month.July, "07/13/2020")]
-    [InlineData(2020, Month.August, "08/17/2020")]
-    [InlineData(2020, Month.September, "09/14/2020")]
-    [InlineData(2020, Month.October, "10/12/2020")]
-    [InlineData(2020, Month.November, "11/16/2020")]
-    [InlineData(2020, Month.December, "12/14/2020")]
+    [InlineData(Month.January, "01/13/2020")]
+    [InlineData(Month.February, "02/17/2020")]
+    [InlineData(Month.March, "03/16/2020")]
+    [InlineData(Month.April, "04/13/2020")]
+    [InlineData(Month.May, "05/18/2020")]
+    [InlineData(Month.June, "06/15/2020")]
+    [InlineData(Month.July, "07/13/2020")]
+    [InlineData(Month.August, "08/17/2020")]
+    [InlineData(Month.September, "09/14/2020")]
+    [InlineData(Month.October, "10/12/2020")]
+    [InlineData(Month.November, "11/16/2020")]
+    [InlineData(Month.December, "12/14/2020")]
     public void GetRollDate_Should_Return_ExpectedTradeDate(
-        int year, Month month, string dateString)
+        Month month, string dateString)
     {
-        var date = Contract.GetRollDate(month, year);
+        var date = Contract.GetRollDate(month, 2020);
 
         date.DayOfWeek.Should().Be(DayOfWeek.Monday);
         date.Should().Be(DateOnly.Parse(dateString));

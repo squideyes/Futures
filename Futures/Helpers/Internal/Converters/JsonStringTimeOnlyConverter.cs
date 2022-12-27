@@ -19,6 +19,6 @@ internal class JsonStringTimeOnlyConverter : JsonConverter<TimeOnly>
     public override void Write(Utf8JsonWriter writer,
         TimeOnly value, JsonSerializerOptions options)
     {
-        throw new InvalidOperationException();
+        writer.WriteStringValue(value.ToString("HH:mm:ss.fff"));
     }
 }
