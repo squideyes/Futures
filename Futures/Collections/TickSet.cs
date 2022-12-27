@@ -19,14 +19,11 @@ public class TickSet : IEnumerable<Tick>
         Contract = contract.MayNot().BeNull();
         TradeDate = tradeDate.MayNot().BeDefault();
 
-        TickOn GetTickOn(TradeDate tradeDate, Func<Market, TimeSpan> getTimeSpan)
-        {
-            return TickOn.From(tradeDate.AsDateTime()
-                .Add(getTimeSpan(contract.Asset.Market!)));
-        }
+        var date = TradeDate.AsDateTime();
+        var offsets = Known.TickOnOffsets;
 
-        MinTickOn = GetTickOn(Contract.TradeDates.First(), p => p.From);
-        MaxTickOn = GetTickOn(Contract.TradeDates.Last(), p => p.Until);
+        MinTickOn = TickOn.From(date.Add(offsets.From));
+        MaxTickOn = TickOn.From(date.Add(offsets.Until));
     }
 
     public Source Source { get; }
@@ -39,8 +36,7 @@ public class TickSet : IEnumerable<Tick>
 
     public Tick this[int index] => ticks[index];
 
-    public string FileName =>
-        GetFileName(Source, Contract, TradeDate);
+    public string FileName => GetFileName(Source, Contract, TradeDate);
 
     public override string ToString() => FileName;
 
@@ -125,11 +121,8 @@ public class TickSet : IEnumerable<Tick>
 
         using (var dataStream = new MemoryStream())
         {
-            using (var gzip = new GZipStream(
-                stream, CompressionMode.Decompress))
-            {
+            using (var gzip = new GZipStream(stream, CompressionMode.Decompress))
                 gzip.CopyTo(dataStream);
-            }
 
             dataStream.Position = 0;
 

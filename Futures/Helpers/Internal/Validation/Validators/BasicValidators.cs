@@ -111,15 +111,15 @@ internal static class BasicValidators
             v => $"be a defined {typeof(T)} value");
     }
 
-    public static T BeBetween<T>(this Must<T> m, T min, T max)
+    public static T BeBetween<T>(this Must<T> m, T minValue, T maxValue)
         where T : IComparable<T>
     {
-        if (max.CompareTo(min) < 0)
-            throw new InvalidOperationException($"{max} < {min}");
+        if (maxValue.CompareTo(minValue) < 0)
+            throw new InvalidOperationException($"{maxValue} < {minValue}");
 
         return m.ThrowErrorIfNotIsValid(
-            v => v.CompareTo(min) >= 0 && v.CompareTo(max) <= 0,
-            v => "be >= {min} and <= {max}");
+            v => v.CompareTo(minValue) >= 0 && v.CompareTo(maxValue) <= 0,
+            v => $"be >= {minValue} and <= {maxValue}");
     }
 
     public static T BeNonDefaultAndValid<T>(this Must<T> m)

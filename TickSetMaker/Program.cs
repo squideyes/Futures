@@ -51,9 +51,11 @@ static bool TryGetSymbols(IConfiguration config, out List<Symbol> symbols)
 {
     var filter = config["symbols"]!;
 
+    var kibotSymbols = Known.SymbolAs.GetSymbols(Source.Kibot).ToHashSet();
+
     if (string.IsNullOrWhiteSpace(filter))
     {
-        symbols = Enum.GetValues<Symbol>().ToList();
+        symbols = kibotSymbols.ToList();
 
         return true;
     }
@@ -64,6 +66,9 @@ static bool TryGetSymbols(IConfiguration config, out List<Symbol> symbols)
     {
         if (Enum.TryParse(s, out Symbol symbol))
         {
+            if (!kibotSymbols.Contains(symbol))
+                return false;
+
             symbols ??= new List<Symbol>();
 
             symbols.Add(symbol);
@@ -88,7 +93,7 @@ static int PrintHelp()
     Console.WriteLine($"TICKSETMAKER source= [symbols=] [target=]");
     Console.WriteLine();
     Console.WriteLine("  source   Folder that contains continuous Kibot Tick-Files");
-    Console.WriteLine($"  symbols  Optional Symbol filter (i.e. ES,TY)");
+    Console.WriteLine($"  symbols  Optional Symbol filter (i.e. ES,ZB)");
     Console.WriteLine("  target   TickSets folder (default = {MyDocs}\\KibotData)");
     Console.WriteLine();
     Console.WriteLine($"Known Symbols: {symbols}");

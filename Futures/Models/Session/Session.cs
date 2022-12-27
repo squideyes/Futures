@@ -23,12 +23,12 @@ public class Session : IEquatable<Session>
         this.postNewsMinutes = postNewsMinutes;
 
         MinDateTime = tradeDate.AsDateTime().Add(
-            asset.Stretch.From.ToTimeSpan());
+            asset.SessionSpan.From.ToTimeSpan());
         MinTickOn = TickOn.From(MinDateTime);
         MinTimeOnly = FromDateTime(MinDateTime);
 
         MaxDateTime = tradeDate.AsDateTime().Add(
-            asset.Stretch.Until.ToTimeSpan());
+            asset.SessionSpan.Until.ToTimeSpan());
         MaxTickOn = TickOn.From(MaxDateTime);
         MaxTimeOnly = FromDateTime(MaxDateTime);
 

@@ -1,4 +1,9 @@
-﻿using FluentAssertions;
+// ********************************************************
+// The use of this source code is licensed under the terms
+// of the MIT License (https://opensource.org/licenses/MIT)
+// ********************************************************
+
+using FluentAssertions;
 using SquidEyes.Futures;
 
 namespace SquidEyes.UnitTests;
@@ -46,12 +51,14 @@ public class SessionTests
 
         session.Embargoes.Count.Should().Be(3);
 
-        session.IsEmbargoed(TickOn.From(2021, 12, 13, 15, 44, 59, 999),
+        session.IsEmbargoed(TickOn.From(
+            new DateTime(2021, 12, 13, 15, 44, 59, 999)),
             out Embargo e1).Should().BeFalse();
 
         e1.Should().BeNull();
 
-        session.IsEmbargoed(TickOn.From(2021, 12, 13, 15, 45),
+        session.IsEmbargoed(TickOn.From(
+            new DateTime(2021, 12, 13, 15, 45, 0)),
             out Embargo e2).Should().BeTrue();
 
         e2.Should().NotBeNull();
@@ -59,7 +66,8 @@ public class SessionTests
         e2.From.Should().Be(From(15, 45));
         e2.Until.Should().Be(Until(15, 59));
 
-        session.IsEmbargoed(TickOn.From(2021, 12, 13, 15, 59, 59, 999),
+        session.IsEmbargoed(TickOn.From(
+            new DateTime(2021, 12, 13, 15, 59, 59, 999)),
             out Embargo e3).Should().BeTrue();
 
         e3.Should().NotBeNull();

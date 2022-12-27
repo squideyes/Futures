@@ -5,15 +5,10 @@
 
 namespace SquidEyes.Futures;
 
-public readonly struct Stretch<T> 
-    where T : IComparable<T>
+public enum Exchange
 {
-    internal Stretch(T from, T until)
-    {
-        From = from;
-        Until = until;
-    }
-
-    public T From { get; }
-    public T Until { get; }
+    CBOT = 1,
+    CME,
+    COMEX,
+    NYMEX
 }

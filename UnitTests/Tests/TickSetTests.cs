@@ -1,4 +1,9 @@
-﻿using FluentAssertions;
+﻿// ********************************************************
+// The use of this source code is licensed under the terms
+// of the MIT License (https://opensource.org/licenses/MIT)
+// ********************************************************
+
+using FluentAssertions;
 using SquidEyes.Futures;
 
 namespace SquidEyes.UnitTests;
@@ -14,14 +19,16 @@ public class TickSetTests
     }
 
     [Theory]
-    [InlineData(Symbol.CL, 98836)]
-    [InlineData(Symbol.ES, 210817)]
-    [InlineData(Symbol.EU, 26103)]
-    [InlineData(Symbol.GC, 39683)]
-    [InlineData(Symbol.JY, 16208)]
-    [InlineData(Symbol.NQ, 275261)]
-    [InlineData(Symbol.TY, 24156)]
-    [InlineData(Symbol.US, 16343)]
+    [InlineData(Symbol.BP, 24646)]
+    [InlineData(Symbol.CL, 55886)]
+    [InlineData(Symbol.ES, 71204)]
+    [InlineData(Symbol.EU, 29437)]
+    [InlineData(Symbol.GC, 47511)]
+    [InlineData(Symbol.JY, 15206)]
+    [InlineData(Symbol.NQ, 102630)]
+    [InlineData(Symbol.ZB, 20246)]
+    [InlineData(Symbol.ZF, 21953)]
+    [InlineData(Symbol.ZN, 25450)]
     public void TickSet_Should_LoadFromStream(
         Symbol symbol, int count)
     {
@@ -31,7 +38,7 @@ public class TickSetTests
     [Fact]
     public void TickSet_Should_RoundTripThroughStream()
     {
-        var source = fixture.GetTickSet(Symbol.US);
+        var source = fixture.GetTickSet(Symbol.ZB);
 
         TickSet target;
 
@@ -48,14 +55,16 @@ public class TickSetTests
     }
 
     [Theory]
-    [InlineData(Symbol.CL, 98836)]
-    [InlineData(Symbol.ES, 210817)]
-    [InlineData(Symbol.EU, 26103)]
-    [InlineData(Symbol.GC, 39683)]
-    [InlineData(Symbol.JY, 16208)]
-    [InlineData(Symbol.NQ, 275261)]
-    [InlineData(Symbol.TY, 24156)]
-    [InlineData(Symbol.US, 16343)]
+    [InlineData(Symbol.BP, 24646)]
+    [InlineData(Symbol.CL, 55886)]
+    [InlineData(Symbol.ES, 71204)]
+    [InlineData(Symbol.EU, 29437)]
+    [InlineData(Symbol.GC, 47511)]
+    [InlineData(Symbol.JY, 15206)]
+    [InlineData(Symbol.NQ, 102630)]
+    [InlineData(Symbol.ZB, 20246)]
+    [InlineData(Symbol.ZF, 21953)]
+    [InlineData(Symbol.ZN, 25450)]
     public void LoadedTickSet_Should_Enumerate(
         Symbol symbol, int total)
     {
@@ -68,14 +77,16 @@ public class TickSetTests
     }
 
     [Theory]
+    [InlineData(Symbol.BP)]
     [InlineData(Symbol.CL)]
     [InlineData(Symbol.ES)]
     [InlineData(Symbol.EU)]
     [InlineData(Symbol.GC)]
     [InlineData(Symbol.JY)]
     [InlineData(Symbol.NQ)]
-    [InlineData(Symbol.TY)]
-    [InlineData(Symbol.US)]
+    [InlineData(Symbol.ZB)]
+    [InlineData(Symbol.ZF)]
+    [InlineData(Symbol.ZN)]
     public void HandCreatedTickSet_Should_Roundtrip(Symbol symbol)
     {
         var source = fixture.GetTickSet(symbol);
@@ -89,16 +100,27 @@ public class TickSetTests
         AssertSourceMatchesTarget(source, target);
     }
 
-    [Fact]
-    public void GetFullPath_Should_ReturnExpectedPath()
+    [Theory]
+    [InlineData(Symbol.BP)]
+    [InlineData(Symbol.CL)]
+    [InlineData(Symbol.ES)]
+    [InlineData(Symbol.EU)]
+    [InlineData(Symbol.GC)]
+    [InlineData(Symbol.JY)]
+    [InlineData(Symbol.NQ)]
+    [InlineData(Symbol.ZB)]
+    [InlineData(Symbol.ZF)]
+    [InlineData(Symbol.ZN)]
+    public void GetFullPath_Should_ReturnExpectedPath(Symbol symbol)
     {
-        var tickSet = fixture.GetTickSet(Symbol.NQ);
+        var tickSet = fixture.GetTickSet(symbol);
 
         tickSet.GetFullPath(@"C:\\Data").Should().Be(
-            @"C:\\Data\TickSets\NQ\2022\KB_NQ_20211213_TP_EST.stps");
+            $@"C:\\Data\TickSets\{symbol}\2020\KB_{symbol}_20191216_TP_EST.stps");
     }
 
-    private void AssertSourceMatchesTarget(TickSet source, TickSet target)
+    private static void AssertSourceMatchesTarget(
+        TickSet source, TickSet target)
     {
         target.Contract.Should().Be(source.Contract);
         target.Count.Should().Be(source.Count);

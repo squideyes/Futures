@@ -1,4 +1,9 @@
-﻿using SquidEyes.Futures;
+// ********************************************************
+// The use of this source code is licensed under the terms
+// of the MIT License (https://opensource.org/licenses/MIT)
+// ********************************************************
+
+using SquidEyes.Futures;
 using static SquidEyes.UnitTests.Properties.TestData;
 
 namespace SquidEyes.UnitTests;
@@ -9,7 +14,7 @@ public class TestingFixture : IDisposable
 
     public TestingFixture()
     {
-        foreach (var symbol in Enum.GetValues<Symbol>())
+        foreach (var symbol in Known.SymbolAs.GetSymbols(Source.Kibot))
         {
             var asset = Known.Assets[symbol];
 
@@ -32,14 +37,16 @@ public class TestingFixture : IDisposable
     {
         return symbol switch
         {
-            Symbol.CL => KB_CL_20211213_TP_EST,
-            Symbol.ES => KB_ES_20211213_TP_EST,
-            Symbol.EU => KB_EU_20211213_TP_EST,
-            Symbol.GC => KB_GC_20211213_TP_EST,
-            Symbol.JY => KB_JY_20211213_TP_EST,
-            Symbol.NQ => KB_NQ_20211213_TP_EST,
-            Symbol.TY => KB_TY_20211213_TP_EST,
-            Symbol.US => KB_US_20211213_TP_EST,
+            Symbol.BP => KB_BP_20191216_TP_EST,
+            Symbol.CL => KB_CL_20191216_TP_EST,
+            Symbol.ES => KB_ES_20191216_TP_EST,
+            Symbol.EU => KB_EU_20191216_TP_EST,
+            Symbol.GC => KB_GC_20191216_TP_EST,
+            Symbol.JY => KB_JY_20191216_TP_EST,
+            Symbol.NQ => KB_NQ_20191216_TP_EST,
+            Symbol.ZB => KB_ZB_20191216_TP_EST,
+            Symbol.ZF => KB_ZF_20191216_TP_EST,
+            Symbol.ZN => KB_ZN_20191216_TP_EST,
             _ => throw new ArgumentOutOfRangeException(nameof(symbol))
         };
     }

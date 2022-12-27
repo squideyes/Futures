@@ -9,22 +9,22 @@ public class Asset : IEquatable<Asset>
 {
     private readonly string format;
 
-    internal Asset(Symbol symbol, float oneTick, double tickIdUsd,
-        Market market, string description, 
-        string months, TimeOnly from, TimeOnly until)
+    internal Asset(Symbol symbol, Exchange exchange, 
+        string months, float oneTick, double tickIdUsd, 
+        string description, TimeOnly from, TimeOnly until)
     {
         var digits = oneTick.GetDigits();
         var tickInUsd = Math.Round(tickIdUsd, 2);
         var ticksPerPoint = (int)(1.0f / oneTick);
 
-        Digits = digits;
         Description = description;
-        Market = market;
+        Digits = digits;
+        Exchange = exchange;
         Months = new SortedSet<Month>(
             months.ToCharArray().Select(v => v.ToMonth()));
         OneTick = oneTick;
         PointInUsd = Math.Round(tickInUsd * ticksPerPoint, 2);
-        Stretch = new Stretch(from, until);
+        SessionSpan = new Stretch<TimeOnly>(from, until);
         Symbol = symbol;
         TickInUsd = tickInUsd;
         TicksPerPoint = ticksPerPoint;
@@ -32,16 +32,16 @@ public class Asset : IEquatable<Asset>
         format = "F" + digits;
     }
 
-    public Symbol Symbol { get;  }
-    public Market? Market { get;  }
     public string? Description { get;  }
-    public double TickInUsd { get;  }
-    public float OneTick { get;  }
     public int Digits { get;  }
-    public int TicksPerPoint { get;  }
-    public double PointInUsd { get;  }
-    public Stretch Stretch { get; }
+    public Exchange Exchange { get;  }
     public SortedSet<Month>? Months { get; }
+    public float OneTick { get;  }
+    public double PointInUsd { get;  }
+    public Stretch<TimeOnly> SessionSpan { get; }
+    public Symbol Symbol { get;  }
+    public double TickInUsd { get;  }
+    public int TicksPerPoint { get;  }
 
     public bool IsPrice(float value) =>
         value >= OneTick && value == Round(value);

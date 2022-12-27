@@ -7,5 +7,6 @@ namespace SquidEyes.Futures;
 
 public enum Source
 {
-    Kibot = 1
+    Amp = 1,
+    Kibot
 }

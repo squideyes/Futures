@@ -7,12 +7,20 @@ namespace SquidEyes.Futures;
 
 public enum Symbol
 {
-    CL = 1,
-    ES,
-    EU,
-    GC,
-    JY,
-    NQ,
-    TY,
-    US
+    BP  = 1,
+    CL ,
+    E7 ,
+    ES ,
+    EU ,
+    GC ,
+    J7 ,
+    JY ,
+    MES,
+    MNQ,
+    NQ ,
+    QM ,
+    QO ,
+    ZB ,
+    ZF ,
+    ZN 
 }

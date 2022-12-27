@@ -63,9 +63,9 @@ namespace SquidEyes.UnitTests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] KB_CL_20211213_TP_EST {
+        internal static byte[] KB_BP_20191216_TP_EST {
             get {
-                object obj = ResourceManager.GetObject("KB_CL_20211213_TP_EST", resourceCulture);
+                object obj = ResourceManager.GetObject("KB_BP_20191216_TP_EST", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace SquidEyes.UnitTests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] KB_ES_20211213_TP_EST {
+        internal static byte[] KB_CL_20191216_TP_EST {
             get {
-                object obj = ResourceManager.GetObject("KB_ES_20211213_TP_EST", resourceCulture);
+                object obj = ResourceManager.GetObject("KB_CL_20191216_TP_EST", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace SquidEyes.UnitTests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] KB_EU_20211213_TP_EST {
+        internal static byte[] KB_ES_20191216_TP_EST {
             get {
-                object obj = ResourceManager.GetObject("KB_EU_20211213_TP_EST", resourceCulture);
+                object obj = ResourceManager.GetObject("KB_ES_20191216_TP_EST", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace SquidEyes.UnitTests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] KB_GC_20211213_TP_EST {
+        internal static byte[] KB_EU_20191216_TP_EST {
             get {
-                object obj = ResourceManager.GetObject("KB_GC_20211213_TP_EST", resourceCulture);
+                object obj = ResourceManager.GetObject("KB_EU_20191216_TP_EST", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace SquidEyes.UnitTests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] KB_JY_20211213_TP_EST {
+        internal static byte[] KB_GC_20191216_TP_EST {
             get {
-                object obj = ResourceManager.GetObject("KB_JY_20211213_TP_EST", resourceCulture);
+                object obj = ResourceManager.GetObject("KB_GC_20191216_TP_EST", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -113,9 +113,9 @@ namespace SquidEyes.UnitTests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] KB_NQ_20211213_TP_EST {
+        internal static byte[] KB_JY_20191216_TP_EST {
             get {
-                object obj = ResourceManager.GetObject("KB_NQ_20211213_TP_EST", resourceCulture);
+                object obj = ResourceManager.GetObject("KB_JY_20191216_TP_EST", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -123,9 +123,9 @@ namespace SquidEyes.UnitTests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] KB_TY_20211213_TP_EST {
+        internal static byte[] KB_NQ_20191216_TP_EST {
             get {
-                object obj = ResourceManager.GetObject("KB_TY_20211213_TP_EST", resourceCulture);
+                object obj = ResourceManager.GetObject("KB_NQ_20191216_TP_EST", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -133,9 +133,29 @@ namespace SquidEyes.UnitTests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] KB_US_20211213_TP_EST {
+        internal static byte[] KB_ZB_20191216_TP_EST {
             get {
-                object obj = ResourceManager.GetObject("KB_US_20211213_TP_EST", resourceCulture);
+                object obj = ResourceManager.GetObject("KB_ZB_20191216_TP_EST", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] KB_ZF_20191216_TP_EST {
+            get {
+                object obj = ResourceManager.GetObject("KB_ZF_20191216_TP_EST", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] KB_ZN_20191216_TP_EST {
+            get {
+                object obj = ResourceManager.GetObject("KB_ZN_20191216_TP_EST", resourceCulture);
                 return ((byte[])(obj));
             }
         }

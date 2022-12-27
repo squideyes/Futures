@@ -25,6 +25,19 @@ public readonly struct TickOn : IEquatable<TickOn>, IComparable<TickOn>
 
     public DateTime AsDateTime() => Value;
 
+    public TradeDate AsTradeDate()
+    {
+        var date = DateOnly.FromDateTime(Value);
+
+        if (Value.TimeOfDay > Known.TickOnOffsets.Until)
+            date = date.AddDays(1);
+
+        if (!Known.TradeDates.TryGetValue(date, out TradeDate tradeDate))
+            throw new InvalidOperationException("TradeDate is invalid!");
+
+        return tradeDate;
+    }
+
     public int CompareTo(TickOn other) => Value.CompareTo(other.Value);
 
     public bool Equals(TickOn other) => Value.Equals(other.Value);
@@ -37,54 +50,43 @@ public readonly struct TickOn : IEquatable<TickOn>, IComparable<TickOn>
     public override string ToString() =>
         Value.ToString("MM/dd/yyyy HH:mm:ss.fff");
 
-    public TradeDate GetTradeDate(Asset asset)
+    public static bool IsTickOnValue(DateTime value)
     {
-        asset.MayNot().BeNull();
+        var date = DateOnly.FromDateTime(value);
 
-        var date = DateOnly.FromDateTime(Value);
-
-        if (Value.TimeOfDay > asset.Market!.Until)
+        if (value.TimeOfDay > Known.TickOnOffsets.Until)
             date = date.AddDays(1);
 
-        return TradeDate.From(date);
-    }
-
-    public static TickOn Parse(string value) =>
-        From(DateTime.Parse(value));
-
-    public static bool TryParse(string value, out TickOn tickOn) =>
-        Safe.TryGetValue(() => Parse(value), out tickOn);
-
-    public static TickOn From(DateTime value)
-    {
-        value.Must().Be(v => IsValue(v));
-
-        return new TickOn(value);
-    }
-
-    public static TickOn From(int year, int month, int day,
-        int hour = 0, int minute = 0, int second = 0, int millisecond = 0)
-    {
-        return From(new DateTime(
-            year, month, day, hour, minute, second, millisecond));
-    }
-
-    public static bool IsValue(DateTime value)
-    {
-        DateOnly date;
-
-        if (value.Hour >= 18)
-            date = DateOnly.FromDateTime(value.Date.AddDays(1));
-        else
-            date = DateOnly.FromDateTime(value.Date);
-
-        if (!Known.TradeDates.ContainsKey(date))
+        if (!Known.TradeDates.TryGetValue(date, out TradeDate tradeDate))
             return false;
 
-        var dateTime = date.ToDateTime(TimeOnly.MinValue);
+        var dateTime = tradeDate.AsDateTime();
 
-        return value >= dateTime.AddHours(-6)
-            && value < dateTime.AddHours(17);
+        var minValue = dateTime.Add(Known.TickOnOffsets.From);
+        var maxValue = dateTime.Add(Known.TickOnOffsets.Until);
+
+        return value >= minValue && value <= maxValue;
+    }
+
+    internal static TickOn From(DateTime value) =>
+        new(value.Must().Be(IsTickOnValue));
+
+    internal static TickOn Parse(string value) =>
+        From(DateTime.Parse(value));
+
+    public static bool TryParse(string value, out TickOn tickOn)
+    {
+        tickOn = default;
+
+        if (!DateTime.TryParse(value, out DateTime dateTime))
+            return false;
+
+        if (!IsTickOnValue(dateTime))
+            return false;
+
+        tickOn = new TickOn(dateTime);
+
+        return true;
     }
 
     public static bool operator ==(TickOn lhs, TickOn rhs) =>

@@ -24,7 +24,9 @@ internal static class KibotParser
 
             var contracts = Known.Contracts[asset];
 
-            var fileName = Path.Join(source, symbol + ".txt");
+            var kibotSymbol = Known.SymbolAs[Source.Kibot, symbol];
+
+            var fileName = Path.Join(source, kibotSymbol + ".txt");
 
             using var reader = new StreamReader(fileName);
 
@@ -45,9 +47,10 @@ internal static class KibotParser
             {
                 var fields = line.Split(',');
 
-                var tickOn = TickOn.Parse(fields[0]);
+                if (!TickOn.TryParse(fields[0], out TickOn tickOn))
+                    continue;
 
-                var tradeDate = tickOn.GetTradeDate(asset);
+                var tradeDate = tickOn.AsTradeDate();
 
                 if (!lookup[symbol].TryGetValue(tradeDate, out Contract? contract))
                     continue;
@@ -62,7 +65,7 @@ internal static class KibotParser
                 }
                 else if (tickSet.TradeDate < tradeDate)
                 {
-                    var prefix = $"{++count:00000} of {total:00000} - ";
+                    var prefix = $"{++count:0000} of {total:0000} - ";
 
                     var fullPath = tickSet.GetFullPath(target);
 

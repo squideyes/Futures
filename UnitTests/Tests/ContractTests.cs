@@ -13,10 +13,10 @@ public class ContractTests
     [Theory]
     [InlineData(Symbol.CL, "1,1,1,1,1,1,1,1,1,1,1,1")]
     [InlineData(Symbol.ES, "3,3,3,3")]
-    [InlineData(Symbol.GC, "2,2,2,2,4")]
+    [InlineData(Symbol.GC, "2,2,2,2,2,2")]
     [InlineData(Symbol.NQ, "3,3,3,3")]
-    [InlineData(Symbol.TY, "3,3,3,3")]
-    [InlineData(Symbol.US, "3,3,3,3")]
+    [InlineData(Symbol.ZB, "3,3,3,3")]
+    [InlineData(Symbol.ZN, "3,3,3,3")]
     public void GetContractMonths_Should_Return_ExpectedMonths(
         Symbol symbol, string expectedString)
     {
@@ -37,8 +37,8 @@ public class ContractTests
     [InlineData(Symbol.ES)]
     [InlineData(Symbol.GC)]
     [InlineData(Symbol.NQ)]
-    [InlineData(Symbol.TY)]
-    [InlineData(Symbol.US)]
+    [InlineData(Symbol.ZB)]
+    [InlineData(Symbol.ZN)]
     public void Contract_Should_Contain_ExpectedTradeDates(Symbol symbol)
     {
         var holidays = HolidayHelper.GetHolidays();

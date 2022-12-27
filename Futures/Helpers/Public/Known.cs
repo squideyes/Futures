@@ -11,11 +11,16 @@ using CBATD = Dictionary<(Asset, TradeDate), Contract>;
 
 public static class Known
 {
+    private static readonly TimeSpan minOffset = TimeSpan.FromHours(-6);
+    private static readonly TimeSpan maxOffset = new(0, 16, 59, 59, 999);
+
     private static readonly CBATD cbatd;
 
     static Known()
     {
         TradeDates = GetTradeDates();
+        TickOnOffsets = new Stretch<TimeSpan>(minOffset, maxOffset);
+        SymbolAs = new SymbolAs();
         Assets = GetAssets();
         Contracts = GetContracts(Assets.Values.ToList());
 
@@ -23,6 +28,8 @@ public static class Known
     }
 
     public static ImmutableSortedDictionary<DateOnly, TradeDate> TradeDates { get; }
+    public static Stretch<TimeSpan> TickOnOffsets { get; }
+    public static SymbolAs SymbolAs { get; }
     public static IReadOnlyDictionary<Symbol, Asset> Assets { get; }
     public static IReadOnlyDictionary<Asset, List<Contract>> Contracts { get; }
 
@@ -47,40 +54,51 @@ public static class Known
 
     private static Dictionary<Symbol, Asset> GetAssets()
     {
-        var cmeFxFutures = new Market("CME FX Futures ETH");
-        var cmeUsIndex = new Market("CME US Index Futures ETH");
-        var cbotInterest = new Market("CBOT Interest Rate ETH");
-        var nymexEnergy = new Market("Nymex Energy Metals ETH");
-
         var assets = new List<Asset>();
 
         static TimeOnly From(int hour, int minute) => new(hour, minute, 0);
 
         static TimeOnly Until(int hour, int minute) => new(hour, minute, 59, 999);
 
-        assets.Add(new Asset(Symbol.CL, 0.01f, 10.0, nymexEnergy,
-            "Crude Oil Contract", "FGHJKMNQUVXZ", From(9, 0), Until(14, 29)));
+        void Add(Symbol symbol, Exchange exchange, string months, float oneTick,
+            double tickInUsd, string description, TimeOnly from, TimeOnly until)
+        {
+            assets.Add(new Asset(symbol, exchange, months,
+                oneTick, tickInUsd, description, from, until));
+        }
 
-        assets.Add(new Asset(Symbol.ES, 0.25f, 12.5, cmeUsIndex,
-            "E-Mini S&P 500 Contract", "HMUZ", From(9, 30), Until(15, 59)));
-
-        assets.Add(new Asset(Symbol.EU, 0.00005f, 6.25, cmeFxFutures,
-            "EURO FX Futures", "HMUZ", From(8, 0), Until(11, 59)));
-
-        assets.Add(new Asset(Symbol.GC, 0.1f, 10.0, nymexEnergy,
-            "Gold Contract", "GJMQZ", From(9, 30), Until(12, 59)));
-
-        assets.Add(new Asset(Symbol.JY, 0.0000005f, 6.25, cmeFxFutures,
-            "Japanese Yen FX Futures", "HMUZ", From(7, 0), Until(9, 59)));
-
-        assets.Add(new Asset(Symbol.NQ, 0.25f, 5.0, cmeUsIndex,
-            "E-Mini NASDAQ 100 Contract", "HMUZ", From(9, 30), Until(15, 59)));
-
-        assets.Add(new Asset(Symbol.TY, 0.015625f, 15.625, cbotInterest,
-            "10 Year US Treasury Note Contract", "HMUZ", From(7, 0), Until(10, 59)));
-
-        assets.Add(new Asset(Symbol.US, 0.03125f, 31.25, cbotInterest,
-            "30 Year US Treasury Bond Contract", "HMUZ", From(7, 0), Until(10, 59)));
+        Add(Symbol.MES, Exchange.CME, "HMUZ", 0.25f, 1.25,
+            "MICRO E-MINI S&P 500", From(9, 30), Until(15, 59));
+        Add(Symbol.ES, Exchange.CME, "HMUZ", 0.25f, 12.5,
+            "E-MINI S&P 500", From(9, 30), Until(15, 59));
+        Add(Symbol.MNQ, Exchange.CME, "HMUZ", 0.25f, 0.5,
+            "MICRO E-MINI NASDAQ-100", From(9, 30), Until(15, 59));
+        Add(Symbol.NQ, Exchange.CME, "HMUZ", 0.25f, 5.0, 
+            "E-MINI NASDAQ-100", From(9, 30), Until(15, 59));
+        Add(Symbol.CL, Exchange.NYMEX, "FGHJKMNQUVXZ", 0.01f,
+            10.0, "CRUDE-OIL", From(9, 0), Until(14, 29));
+        Add(Symbol.QM, Exchange.NYMEX, "FGHJKMNQUVXZ", 0.01f,
+            1.0, "E-MINI CRUDE-OIL", From(9, 0), Until(14, 29));
+        Add(Symbol.ZB, Exchange.CBOT, "HMUZ", 0.03125f, 31.25, 
+            "30 YR US TREASURY BOND", From(7, 0), Until(10, 59));
+        Add(Symbol.ZN, Exchange.CBOT, "HMUZ", 0.015625f, 15.625,
+            "10 YR US TREASURY NOTE", From(7, 0), Until(10, 59));
+        Add(Symbol.GC, Exchange.COMEX, "GJMQVZ", 0.1f, 
+            10.0, "GOLD", From(9, 30), Until(12, 59));
+        Add(Symbol.QO, Exchange.COMEX, "FGJMQVZ", 0.25f,
+            12.5000, "E-MINI GOLD", From(9, 30), Until(12, 59));
+        Add(Symbol.EU, Exchange.CME, "HMUZ", 0.00005f, 6.25,
+            "EURO FX", From(8, 0), Until(11, 59));
+        Add(Symbol.E7, Exchange.CME, "HMUZ", 0.0001f, 6.25,
+            "E-MINI EURO FX", From(8, 0), Until(11, 59));
+        Add(Symbol.JY, Exchange.CME, "HMUZ", 0.0000005f, 6.25,
+            "JAPANESE YEN", From(7, 0), Until(9, 59));
+        Add(Symbol.J7, Exchange.CME, "HMUZ", 0.000001f, 6.25,
+            "E-MINI JAPANESE YEN", From(7, 0), Until(9, 59));
+        Add(Symbol.BP, Exchange.CME, "HMUZ", 0.0001f, 6.25,
+            "BRITISH POUND", From(4, 0), Until(11, 59));
+        Add(Symbol.ZF, Exchange.CBOT, "HMUZ", 0.0078125f, 7.8125, 
+            "5 YR US TREASURY NOTE", From(7, 0), Until(10, 59));
 
         return assets.ToDictionary(a => a.Symbol);
     }
