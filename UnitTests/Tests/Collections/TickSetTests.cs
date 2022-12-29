@@ -3,12 +3,12 @@
 // of the MIT License (https://opensource.org/licenses/MIT)
 // ********************************************************
 
-using FluentAssertions;
 using SquidEyes.Futures;
+using SquidEyes.Testing;
 
 namespace SquidEyes.UnitTests;
 
-[Collection("Testing")]
+[Collection("TestingCollection")]
 public class TickSetTests
 {
     private readonly TestingFixture fixture;
@@ -51,7 +51,7 @@ public class TickSetTests
             target = TickSet.From(stream);
         };
 
-        AssertSourceMatchesTarget(source, target);
+        TestingHelper.AssertSourceMatchesTarget(source, target);
     }
 
     [Theory]
@@ -97,7 +97,7 @@ public class TickSetTests
         foreach (var tick in source)
             target.Add(tick);
 
-        AssertSourceMatchesTarget(source, target);
+        TestingHelper.AssertSourceMatchesTarget(source, target);
     }
 
     [Theory]
@@ -117,21 +117,5 @@ public class TickSetTests
 
         tickSet.GetFullPath(@"C:\\Data").Should().Be(
             $@"C:\\Data\TickSets\{symbol}\2020\KB_{symbol}_20191216_TP_EST.stps");
-    }
-
-    private static void AssertSourceMatchesTarget(
-        TickSet source, TickSet target)
-    {
-        target.Contract.Should().Be(source.Contract);
-        target.Count.Should().Be(source.Count);
-        target.FileName.Should().Be(source.FileName);
-        target.MaxTickOn.Should().Be(source.MaxTickOn);
-        target.MinTickOn.Should().Be(source.MinTickOn);
-        target.Source.Should().Be(source.Source);
-        target.TradeDate.Should().Be(source.TradeDate);
-        target.ToString().Should().Be(source.ToString());
-
-        for (var i = 0; i < target.Count; i++)
-            target[i].Should().Be(source[i]);
     }
 }

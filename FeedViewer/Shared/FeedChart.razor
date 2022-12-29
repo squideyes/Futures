@@ -1,0 +1,77 @@
+﻿@inject TestData testData
+
+<div id="ControlRegion" align='center'>
+    <SfChart @ref="chart"
+             Theme="Theme.Fluent"
+             Width="90%"
+             Title="Title Goes Here">
+        <ChartPrimaryXAxis RangePadding="ChartRangePadding.Normal"
+                           LabelFormat="HH:mm" 
+                           ValueType="Syncfusion.Blazor.Charts.ValueType.DateTimeCategory">
+        </ChartPrimaryXAxis>
+        <ChartPrimaryYAxis OpposedPosition=true
+                           LabelFormat="{value}">
+        </ChartPrimaryYAxis>
+        <ChartSeriesCollection>
+            <ChartSeries DataSource="@datas"
+                         XName="CloseOn"
+                         High="High"
+                         Low="Low"
+                         Open="Open"
+                         Close="Close"
+                         BearFillColor="#2ecd71"
+                         BullFillColor="#e74c3d"
+                         Type="ChartSeriesType.Candle">
+            </ChartSeries>
+        </ChartSeriesCollection>
+        <ChartTooltipSettings Enable="true">
+        </ChartTooltipSettings>
+        <ChartZoomSettings EnableSelectionZooming=true
+                           EnableMouseWheelZooming=true>
+        </ChartZoomSettings>
+        <SfRangeNavigator Value="@range"
+                          Width="90%"
+                          ValueType="Syncfusion.Blazor.Charts.RangeValueType.DateTime"
+                          LabelFormat="HH:mm"
+                          EnableRtl="false"
+                          Theme="Theme.Fluent">
+            <RangeNavigatorEvents Changed="SliderChanged" />
+            <RangeNavigatorSeriesCollection>
+                <RangeNavigatorSeries DataSource="@datas"
+                                      XName="CloseOn"
+                                      YName="Close"
+                                      Type="RangeNavigatorType.Line" />
+            </RangeNavigatorSeriesCollection>
+        </SfRangeNavigator>
+    </SfChart>
+</div>
+
+@code
+{
+    private SfChart chart;
+    private List<ChartData>? datas;
+    private object[] range;
+    private double zoomFactor;
+    private double zoomPosition;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.CompletedTask;
+
+        datas = testData.GetTickSet(Symbol.NQ).GetChartDatas(16);
+
+        var range = new List<DateTime>()
+        {
+            datas.First().CloseOn,
+            datas.Last().CloseOn
+        };
+
+        this.range = range.Select(v => (object)v).ToArray();
+    }
+
+    public void SliderChanged(ChangedEventArgs args)
+    {
+        zoomFactor = args.ZoomFactor;
+        zoomPosition = args.ZoomPosition;
+    }
+}

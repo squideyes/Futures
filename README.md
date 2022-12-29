@@ -2,13 +2,23 @@
 ![Downloads](https://img.shields.io/nuget/dt/squideyes.futures)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**SquidEyes.Futures** is a small set of trading primitives, helper classes, extension methods and utilities; **most notably**:
+**SquidEyes.Futures** is a small set of trading primitives, helper classes, extension methods and trading utilities; **most notably**:
 
 * **TickSet**: A high-performance, low-memory, tick-data collection that manages data on a Source+Contract+TradeDate basis
-* **Known**: Defines the Assets, Trade-Dates and Contracts SquidEyes.Trading works with
-* **TickSetMaker**: Converts and normalizes Kibot futures data to one or more TickSets (from continuous from <a href="http://www.kibot.com/buy.aspx#futures" target="_blank">http://www.kibot.com/buy.aspx#futures</a>)
+* **Known**: A static helper class that defines the Assets, Trade-Dates, Contracts and SymbolAs-conversions that SquidEyes.Trading works with
+* **WickoFeed**: A helper-class that converts ticks in Renko-style candles, but with High/Low wicks
+* **TdRenkoFeed**: A helper-class that converts ticks in TdRenko-style candles
+* **FeedViewer**: a Blazor StockChart viewer, used to visually verify that the TdRenkoFeed and WickoFeed components form valid candles
+    * NOTE: you'll need to have a valid Syncfusion Blazor License to run the viewer.  You can visit their <a href="https://www.syncfusion.com/blazor-components" target="_blank">Blazor</a> component page to sign up for a free 30-day trial account, or if if you have less than $1MM in annual revenue, you may qualify for a free <a href="https://www.syncfusion.com/products/communitylicense" target="_blank">community license</a>
+* **TickSetMaker**: Converts and normalizes continuous Kibot futures data to one or more TickSets (see <a href="http://www.kibot.com/buy.aspx#futures" target="_blank">http://www.kibot.com/buy.aspx#futures</a>)
 
-The software includes a less-than-comprehensive set of unit-tests,  open-sourced under a standard MIT license (see License.md for further details).  Even so, the code is mostly for the author's own personal use so there is little documentation on offer, nor is there any intent to document the code in the near future.
+The software is open-sourced under a standard MIT license (see **LICENSE.md** for further details).  
+
+Contributions are always welcome (see **CONTRIBUTING.md** for further details).
+
+The code is mostly for the author's own personal use so there is no documentation on offer, aside from this README.md, nor is there any intent (on the author's part!) to create more-detailed documention, going forward.  
+
+As to unit-tests, a decent percent of the code is covered, but the tests should not be looked upon as being comprehensive.
 
 **Caveat Emptor**:  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 

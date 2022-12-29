@@ -1,9 +1,9 @@
-// ********************************************************
+﻿// ********************************************************
 // The use of this source code is licensed under the terms
 // of the MIT License (https://opensource.org/licenses/MIT)
 // ********************************************************
 
-namespace SquidEyes.UnitTests.Properties {
+namespace SquidEyes.Testing.Properties {
     using System;
     
     
@@ -34,7 +34,7 @@ namespace SquidEyes.UnitTests.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SquidEyes.UnitTests.Properties.TestData", typeof(TestData).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SquidEyes.Testing.Properties.TestData", typeof(TestData).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

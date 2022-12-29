@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Futures\Futures.csproj" />
+    <ProjectReference Include="..\Testing\Testing.csproj" />
   </ItemGroup>
 
 </Project>
