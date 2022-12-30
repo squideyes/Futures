@@ -118,7 +118,7 @@ internal static class BasicValidators
             throw new InvalidOperationException($"{maxValue} < {minValue}");
 
         return m.ThrowErrorIfNotIsValid(
-            v => v.CompareTo(minValue) >= 0 && v.CompareTo(maxValue) <= 0,
+            v => v.IsBetween(minValue, maxValue),
             v => $"be >= {minValue} and <= {maxValue}");
     }
 

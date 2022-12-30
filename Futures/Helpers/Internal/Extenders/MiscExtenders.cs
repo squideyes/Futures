@@ -13,6 +13,16 @@ internal static class MiscExtenders
 
     public static void AsAction<T>(this T value, Action<T> act) => act(value);
 
+    public static bool IsBetween<T>(this T value, T minValue, T maxValue)
+        where T : IComparable<T>
+    {
+        if (maxValue.CompareTo(minValue) < 0)
+            throw new InvalidOperationException($"{maxValue} < {minValue}");
+
+        return value.CompareTo(minValue) >= 0 
+            && value.CompareTo(maxValue) <= 0;
+    }
+
     public static void EnsurePathExists(this string fileName)
     {
         var path = Path.GetDirectoryName(fileName);

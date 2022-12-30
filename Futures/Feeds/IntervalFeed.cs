@@ -13,37 +13,20 @@ public class IntervalFeed : IFeed
 
     public event EventHandler<CandleArgs>? OnCandle;
 
-    public IntervalFeed(Asset asset, Session session, Interval interval)
+    public IntervalFeed(Asset asset, int seconds)
     {
         Asset = asset.MayNot().BeNull();
-        Session = session.MayNot().BeNull();
-        Interval = interval.Must().BeEnumValue();
+        Seconds = seconds.Must().Be(v => v.IsInterval());
     }
 
     public Asset Asset { get; }
-    public Session Session { get; }
-    public Interval Interval { get; }
+    public int Seconds { get; }
 
     public FeedKind FeedKind => FeedKind.Interval;
 
     public void HandleTick(Tick tick, bool isLastTick)
     {
-        var intervalOn = tick.TickOn.ToIntervalOn(Interval);
-
-        if (isLastTick)
-        {
-            var candle = new Candle(Asset, candleId++, tick.TickOn,
-                ohlc.Open, ohlc.High, ohlc.Low, ohlc.Close, false);
-
-            OnCandle?.Invoke(this, new CandleArgs(candle, tick));
-
-            return;
-        }
-
-        if (!Session.InSession(intervalOn))
-            return;
-
-        var closeOn = TickOn.From(intervalOn);
+        var closeOn = tick.TickOn.ToCloseOn(Seconds);
 
         if (!lastCloseOn.HasValue)
         {
@@ -64,5 +47,19 @@ public class IntervalFeed : IFeed
         }
 
         lastCloseOn = closeOn;
+    }
+
+    public Candle GetOpenCandle(Tick tick)
+    {
+        tick.MayNot().BeDefault();
+
+        if (ohlc == null)
+        {
+            throw new InvalidOperationException(
+                "The \"HandleTick\" method has yet to be called once!");
+        }
+
+        return new Candle(Asset, candleId++, tick.TickOn,
+            ohlc.Open, ohlc.High, ohlc.Low, ohlc.Close, false);
     }
 }

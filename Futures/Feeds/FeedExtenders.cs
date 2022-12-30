@@ -3,29 +3,18 @@
 // of the MIT License (https://opensource.org/licenses/MIT)
 // ********************************************************
 
-using static System.TimeSpan;
-
 namespace SquidEyes.Futures;
 
 internal static class FeedExtenders
 {
-    private static readonly Dictionary<Interval, long> intervals = new();
-
-    static FeedExtenders()
-    {
-        foreach (var interval in Enum.GetValues<Interval>())
-            intervals.Add(interval, (int)interval * TicksPerSecond);
-    }
-
-    public static DateTime ToIntervalOn(
-        this TickOn value, Interval interval)
+    public static TickOn ToCloseOn(this TickOn value, int seconds)
     {
         value.MayNot().BeDefault();
-        interval.Must().BeEnumValue();
+        seconds.Must().Be(v => v.IsInterval());
 
-        var ticks = intervals[interval];
+        var interval = TimeSpan.FromSeconds(seconds).Ticks;
 
-        return value.AsDateTime().Ticks.AsFunc(
-            t => new DateTime(t - (t % ticks)).AddTicks(ticks));
+        return TickOn.From(value.AsDateTime().Ticks.AsFunc(
+            t => new DateTime(t - (t % interval)).AddTicks(interval)));
     }
 }

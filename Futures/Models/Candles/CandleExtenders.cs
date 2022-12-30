@@ -5,12 +5,8 @@
 
 namespace SquidEyes.Futures;
 
-public enum Interval
+public static class CandleExtenders
 {
-    FifteenSecond = 15,
-    ThirtySecond = 30,
-    OneMinute = 60,
-    TwoMinute = 120,
-    ThreeMinute = 180,
-    FiveMinute = 300
+    public static bool IsInterval(this int value) =>
+        value.IsBetween(5, 3600) && value % 5 == 0;
 }

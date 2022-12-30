@@ -73,17 +73,17 @@ public static class Known
             "E-MINI S&P 500", From(9, 30), Until(15, 59));
         Add(Symbol.MNQ, Exchange.CME, "HMUZ", 0.25f, 0.5,
             "MICRO E-MINI NASDAQ-100", From(9, 30), Until(15, 59));
-        Add(Symbol.NQ, Exchange.CME, "HMUZ", 0.25f, 5.0, 
+        Add(Symbol.NQ, Exchange.CME, "HMUZ", 0.25f, 5.0,
             "E-MINI NASDAQ-100", From(9, 30), Until(15, 59));
         Add(Symbol.CL, Exchange.NYMEX, "FGHJKMNQUVXZ", 0.01f,
             10.0, "CRUDE-OIL", From(9, 0), Until(14, 29));
         Add(Symbol.QM, Exchange.NYMEX, "FGHJKMNQUVXZ", 0.01f,
             1.0, "E-MINI CRUDE-OIL", From(9, 0), Until(14, 29));
-        Add(Symbol.ZB, Exchange.CBOT, "HMUZ", 0.03125f, 31.25, 
+        Add(Symbol.ZB, Exchange.CBOT, "HMUZ", 0.03125f, 31.25,
             "30 YR US TREASURY BOND", From(7, 0), Until(10, 59));
         Add(Symbol.ZN, Exchange.CBOT, "HMUZ", 0.015625f, 15.625,
             "10 YR US TREASURY NOTE", From(7, 0), Until(10, 59));
-        Add(Symbol.GC, Exchange.COMEX, "GJMQVZ", 0.1f, 
+        Add(Symbol.GC, Exchange.COMEX, "GJMQVZ", 0.1f,
             10.0, "GOLD", From(9, 30), Until(12, 59));
         Add(Symbol.QO, Exchange.COMEX, "FGJMQVZ", 0.25f,
             12.5000, "E-MINI GOLD", From(9, 30), Until(12, 59));
@@ -97,7 +97,7 @@ public static class Known
             "E-MINI JAPANESE YEN", From(7, 0), Until(9, 59));
         Add(Symbol.BP, Exchange.CME, "HMUZ", 0.0001f, 6.25,
             "BRITISH POUND", From(4, 0), Until(11, 59));
-        Add(Symbol.ZF, Exchange.CBOT, "HMUZ", 0.0078125f, 7.8125, 
+        Add(Symbol.ZF, Exchange.CBOT, "HMUZ", 0.0078125f, 7.8125,
             "5 YR US TREASURY NOTE", From(7, 0), Until(10, 59));
 
         return assets.ToDictionary(a => a.Symbol);
