@@ -17,10 +17,11 @@ public class TestingFixture : IDisposable
         testData = new TestData();
     }
 
-    public TradeDate TradeDate => testData.TradeDate;
-
     public TickSet GetTickSet(Symbol symbol) =>
         testData.GetTickSet(symbol);
+
+    public CandleSet GetCandleSet(Symbol symbol) =>
+        testData.GetCandleSet(symbol);
 
     public void Dispose()
     {

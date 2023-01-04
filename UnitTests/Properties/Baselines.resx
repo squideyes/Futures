@@ -118,7 +118,40 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="AtrIndicatorResults" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\atrindicatorresults.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="DemaIndicatorResults" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\demaindicatorresults.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="EmaIndicatorResults" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\emaindicatorresults.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="KamaIndicatorResults" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kamaindicatorresults.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="KdsIndicatorResults" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\kdsindicatorresults.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="SmaIndicatorResults" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\smaindicatorresults.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="SmmaIndicatorResults" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\smmaindicatorresults.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="StdDevIndicatorResults" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\stddevindicatorresults.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="SwingIndicatorResults" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\swingindicatorresults.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="TdRenkoFeedBaselines" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\tdrenkofeedbaselines.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="TemaIndicatorResults" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\temaindicatorresults.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="WmaIndicatorResults" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\wmaindicatorresults.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

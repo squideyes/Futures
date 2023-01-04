@@ -26,7 +26,7 @@ try
         var source = Roundtrip(fileName);
 
         Console.WriteLine(
-            $"{prefix}ISVALID: {source} ({source.Count:N0} ticks)");
+            $"{prefix}LOADED: {source} ({source.Count:N0} ticks)");
     }
 
     var elapsed = DateTime.UtcNow - startedOn;

@@ -4,9 +4,8 @@
 // ********************************************************
 
 using SquidEyes.Futures;
-using SquidEyes.UnitTests;
 
-namespace SquidEyes.Praxis.UnitTests;
+namespace SquidEyes.UnitTests;
 
 [Collection(nameof(TestingCollection))]
 public class IntervalFeedTests : IClassFixture<TestingFixture>

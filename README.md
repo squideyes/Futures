@@ -8,8 +8,6 @@
 * **Known**: A static helper class that defines the Assets, Trade-Dates, Contracts and SymbolAs-conversions that SquidEyes.Trading works with
 * **WickoFeed**: A helper-class that converts ticks in Renko-style candles, but with High/Low wicks
 * **TdRenkoFeed**: A helper-class that converts ticks in TdRenko-style candles
-* **FeedViewer**: a Blazor StockChart viewer, used to visually verify that the TdRenkoFeed and WickoFeed components form valid candles
-    * NOTE: you'll need to have a valid Syncfusion Blazor License to run the viewer.  You can visit their <a href="https://www.syncfusion.com/blazor-components" target="_blank">Blazor</a> component page to sign up for a free 30-day trial account, or if if you have less than $1MM in annual revenue, you may qualify for a free <a href="https://www.syncfusion.com/products/communitylicense" target="_blank">community license</a>
 * **TickSetMaker**: Converts and normalizes continuous Kibot futures data to one or more TickSets (see <a href="http://www.kibot.com/buy.aspx#futures" target="_blank">http://www.kibot.com/buy.aspx#futures</a>)
 
 The software is open-sourced under a standard MIT license (see **LICENSE.md** for further details).  
