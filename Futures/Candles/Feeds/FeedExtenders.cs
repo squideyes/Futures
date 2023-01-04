@@ -7,14 +7,18 @@ namespace SquidEyes.Futures;
 
 internal static class FeedExtenders
 {
-    public static TickOn ToCloseOn(this TickOn value, int seconds)
+    public static TickOn ToIntervalOn(this TickOn value, int seconds)
     {
-        value.MayNot().BeDefault();
-        seconds.Must().Be(v => v.IsInterval());
-
-        var interval = TimeSpan.FromSeconds(seconds).Ticks;
+        var ticks = TimeSpan.FromSeconds(seconds).Ticks;
 
         return TickOn.From(value.AsDateTime().Ticks.AsFunc(
-            t => new DateTime(t - (t % interval)).AddTicks(interval)));
+            t => new DateTime(t - (t % ticks)).AddTicks(ticks)));
+    }
+
+    public static bool IsIntervalOn(this TickOn value, int seconds)
+    {
+        var ticks = TimeSpan.FromSeconds(seconds).Ticks;
+
+        return value.AsDateTime().Ticks % ticks == 0;
     }
 }

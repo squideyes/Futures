@@ -7,26 +7,49 @@ namespace SquidEyes.Futures;
 
 public class IntervalFeed : IFeed
 {
+    private readonly long intervalTicks;
+    private readonly DateTime minTickOnValue;
+    private readonly DateTime maxTickOnValue;
+
     private int candleId = 0;
     private OHLC ohlc = null!;
     private TickOn? lastCloseOn = null;
 
     public event EventHandler<CandleArgs>? OnCandle;
 
-    public IntervalFeed(Asset asset, int seconds)
+    public IntervalFeed(Asset asset, TradeDate tradeDate, int seconds)
     {
         Asset = asset.MayNot().BeNull();
+        TradeDate = tradeDate.MayNot().BeDefault();
         Seconds = seconds.Must().Be(v => v.IsInterval());
+
+        minTickOnValue = TradeDate.AsDateTime().Add(
+            Known.TickOnOffsets.From);
+
+        maxTickOnValue = TradeDate.AsDateTime().Add(
+            Known.TickOnOffsets.Until);
+
+        intervalTicks = TimeSpan.FromSeconds(seconds).Ticks;
     }
 
     public Asset Asset { get; }
+    public TradeDate TradeDate { get; }
     public int Seconds { get; }
 
     public FeedKind FeedKind => FeedKind.Interval;
 
     public void HandleTick(Tick tick, bool isLastTick)
     {
-        var closeOn = tick.TickOn.ToCloseOn(Seconds);
+        tick.TickOn.AsDateTime().Must()
+            .BeBetween(minTickOnValue, maxTickOnValue);
+
+        var dateTime = tick.TickOn.AsDateTime().Ticks.AsFunc(t => 
+            new DateTime(t - (t % intervalTicks)).AddTicks(intervalTicks));
+
+        if (dateTime > maxTickOnValue)
+            return;
+
+        var closeOn = TickOn.From(dateTime);
 
         if (!lastCloseOn.HasValue)
         {
