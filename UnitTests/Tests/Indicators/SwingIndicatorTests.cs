@@ -59,7 +59,7 @@ public class SwingIndicatorTests : IClassFixture<TestingFixture>
         var baselines = new List<Baseline>();
 
         foreach (var fields in new CsvEnumerator(
-            Baselines.SwingIndicatorResults, 4))
+            Baselines.SwingIndicatorBaselines, 4))
         {
             baselines.Add(new Baseline()
             {

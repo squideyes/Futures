@@ -74,9 +74,9 @@ namespace SquidEyes.UnitTests.Properties {
         ///12/15/2019 18:00:01.198,3.7545717695564647
         ///12/15/2019 18:00:01.198,3.7273019 [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string AtrIndicatorResults {
+        internal static string AtrIndicatorBaselines {
             get {
-                return ResourceManager.GetString("AtrIndicatorResults", resourceCulture);
+                return ResourceManager.GetString("AtrIndicatorBaselines", resourceCulture);
             }
         }
         
@@ -94,9 +94,9 @@ namespace SquidEyes.UnitTests.Properties {
         ///12/15/2019 18:00:01.198,8536.406518260075
         ///12/15/2019 18:00:01.198,8536.4688608595 [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string DemaIndicatorResults {
+        internal static string DemaIndicatorBaselines {
             get {
-                return ResourceManager.GetString("DemaIndicatorResults", resourceCulture);
+                return ResourceManager.GetString("DemaIndicatorBaselines", resourceCulture);
             }
         }
         
@@ -114,9 +114,9 @@ namespace SquidEyes.UnitTests.Properties {
         ///12/15/2019 18:00:01.198,8535.874466561901
         ///12/15/2019 18:00:01.198,8535.84657024232 [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string EmaIndicatorResults {
+        internal static string EmaIndicatorBaselines {
             get {
-                return ResourceManager.GetString("EmaIndicatorResults", resourceCulture);
+                return ResourceManager.GetString("EmaIndicatorBaselines", resourceCulture);
             }
         }
         
@@ -140,25 +140,32 @@ namespace SquidEyes.UnitTests.Properties {
         ///12/15/2019 18:00:03.173,8538
         ///12 [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string KamaIndicatorResults {
+        internal static string KamaIndicatorBaselines {
             get {
-                return ResourceManager.GetString("KamaIndicatorResults", resourceCulture);
+                return ResourceManager.GetString("KamaIndicatorBaselines", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;testhost.exe&apos; (CoreCLR: clrhost): Loaded &apos;C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\PrivateAssemblies\Runtime\Microsoft.VisualStudio.Debugger.Runtime.NetCoreApp.dll&apos;. Skipped loading symbols. Module is optimized and the debugger option &apos;Just My Code&apos; is enabled.
-        ///None,8536,8536,8536,8536,None,None
+        ///   Looks up a localized string similar to None,8536,8536,8536,8536,None,None
         ///None,8537,8537,8537,8537,None,None
         ///None,8538,8538,8538,8538,None,None
         ///None,8539,8539,8539,8539,None,None
         ///None,8536,8536,8536,8536,None,None
         ///None,8535,8535,8535,8535,None,None
-        ///None, [rest of string was truncated]&quot;;.
+        ///None,8534,8534,8534,8534,None,None
+        ///None,8537,8537,8537,8537,None,None
+        ///None,8538,8538,8538,8538,None,None
+        ///None,8539,8539,8539,8539,None,None
+        ///None,8536,8536,8536,8536,None,None
+        ///None,8539,8539,8539,8539,None,None
+        ///None,8536,8536,8536,8536,None,None
+        ///None,8535,8535,8535,8535,None,None
+        ///None,853 [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string KdsIndicatorResults {
+        internal static string KdsIndicatorBaselines {
             get {
-                return ResourceManager.GetString("KdsIndicatorResults", resourceCulture);
+                return ResourceManager.GetString("KdsIndicatorBaselines", resourceCulture);
             }
         }
         
@@ -181,9 +188,9 @@ namespace SquidEyes.UnitTests.Properties {
         ///12/15/2019 18:00:02.456,8534.1
         /// [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string SmaIndicatorResults {
+        internal static string SmaIndicatorBaselines {
             get {
-                return ResourceManager.GetString("SmaIndicatorResults", resourceCulture);
+                return ResourceManager.GetString("SmaIndicatorBaselines", resourceCulture);
             }
         }
         
@@ -201,9 +208,9 @@ namespace SquidEyes.UnitTests.Properties {
         ///12/15/2019 18:00:01.198,8536.206320906604
         ///12/15/2019 18:00:01.198,8536.262873554884        /// [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string SmmaIndicatorResults {
+        internal static string SmmaIndicatorBaselines {
             get {
-                return ResourceManager.GetString("SmmaIndicatorResults", resourceCulture);
+                return ResourceManager.GetString("SmmaIndicatorBaselines", resourceCulture);
             }
         }
         
@@ -222,18 +229,18 @@ namespace SquidEyes.UnitTests.Properties {
         ///12/15/2019 18:00:01.198,2.0999999999999996
         ///12/15/2019 18:00:02.41 [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string StdDevIndicatorResults {
+        internal static string StdDevIndicatorBaselines {
             get {
-                return ResourceManager.GetString("StdDevIndicatorResults", resourceCulture);
+                return ResourceManager.GetString("StdDevIndicatorBaselines", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string SwingIndicatorResults {
+        internal static string SwingIndicatorBaselines {
             get {
-                return ResourceManager.GetString("SwingIndicatorResults", resourceCulture);
+                return ResourceManager.GetString("SwingIndicatorBaselines", resourceCulture);
             }
         }
         
@@ -269,9 +276,9 @@ namespace SquidEyes.UnitTests.Properties {
         ///12/15/2019 18:00:01.198,8537.62391927935
         /// [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string TemaIndicatorResults {
+        internal static string TemaIndicatorBaselines {
             get {
-                return ResourceManager.GetString("TemaIndicatorResults", resourceCulture);
+                return ResourceManager.GetString("TemaIndicatorBaselines", resourceCulture);
             }
         }
         
@@ -290,9 +297,9 @@ namespace SquidEyes.UnitTests.Properties {
         ///12/15/2019 18:00:01.198,8536.072727272727
         ///12/15/2019 18:00:02 [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string WmaIndicatorResults {
+        internal static string WmaIndicatorBaselines {
             get {
-                return ResourceManager.GetString("WmaIndicatorResults", resourceCulture);
+                return ResourceManager.GetString("WmaIndicatorBaselines", resourceCulture);
             }
         }
     }

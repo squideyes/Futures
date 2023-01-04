@@ -79,7 +79,7 @@ public class KdsIndicatorTests : IClassFixture<TestingFixture>
     {
         var results = new List<KdsResult>();
 
-        var reader = new StringReader(Baselines.KdsIndicatorResults);
+        var reader = new StringReader(Baselines.KdsIndicatorBaselines);
 
         string line;
 

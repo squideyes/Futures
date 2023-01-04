@@ -24,63 +24,63 @@ public class BasicIndicatorTests : IClassFixture<TestingFixture>
     public void AtrIndicatorBaselineTest()
     {
         RunAndValidate(new AtrIndicator(10, 1000),
-            Baselines.AtrIndicatorResults);
+            Baselines.AtrIndicatorBaselines);
     }
 
     [Fact]
     public void DemaIndicatorBaselineTest()
     {
         RunAndValidate(new DemaIndicator(10, 1000),
-            Baselines.DemaIndicatorResults);
+            Baselines.DemaIndicatorBaselines);
     }
 
     [Fact]
     public void EmaIndicatorBaselineTest()
     {
         RunAndValidate(new EmaIndicator(10, 1000),
-            Baselines.EmaIndicatorResults);
+            Baselines.EmaIndicatorBaselines);
     }
 
     [Fact]
     public void KamaIndicatorBaselineTest()
     {
         RunAndValidate(new KamaIndicator(10, 5, 15, 1000),
-            Baselines.KamaIndicatorResults);
+            Baselines.KamaIndicatorBaselines);
     }
 
     [Fact]
     public void SmaIndicatorBaselineTest()
     {
         RunAndValidate(new SmaIndicator(10, 1000),
-            Baselines.SmaIndicatorResults);
+            Baselines.SmaIndicatorBaselines);
     }
 
     [Fact]
     public void SmmaIndicatorBaselineTest()
     {
         RunAndValidate(new SmmaIndicator(10, 1000),
-            Baselines.SmmaIndicatorResults);
+            Baselines.SmmaIndicatorBaselines);
     }
 
     [Fact]
     public void StdDevIndicatorBaselineTest()
     {
         RunAndValidate(new StdDevIndicator(10, 1000),
-            Baselines.StdDevIndicatorResults);
+            Baselines.StdDevIndicatorBaselines);
     }
 
     [Fact]
     public void TemaIndicatorBaselineTest()
     {
         RunAndValidate(new TemaIndicator(10, 1000),
-            Baselines.TemaIndicatorResults);
+            Baselines.TemaIndicatorBaselines);
     }
 
     [Fact]
     public void WmaIndicatorBaselineTest()
     {
         RunAndValidate(new WmaIndicator(10, 1000),
-            Baselines.WmaIndicatorResults);
+            Baselines.WmaIndicatorBaselines);
     }
 
     private void RunAndValidate(IBasicIndicator indicator, string csv)
