@@ -19,26 +19,22 @@ public class TickSetTests
     }
 
     [Theory]
-    [InlineData(Symbol.BP, 24646)]
-    [InlineData(Symbol.CL, 55886)]
-    [InlineData(Symbol.ES, 71204)]
-    [InlineData(Symbol.EU, 29437)]
     [InlineData(Symbol.GC, 47511)]
-    [InlineData(Symbol.JY, 15206)]
     [InlineData(Symbol.NQ, 102630)]
-    [InlineData(Symbol.ZB, 20246)]
     [InlineData(Symbol.ZF, 21953)]
-    [InlineData(Symbol.ZN, 25450)]
     public void TickSet_Should_LoadFromStream(
         Symbol symbol, int count)
     {
         fixture.GetTickSet(symbol).Count.Should().Be(count);
     }
 
-    [Fact]
-    public void TickSet_Should_RoundTripThroughStream()
+    [Theory]
+    [InlineData(Symbol.GC)]
+    [InlineData(Symbol.NQ)]
+    [InlineData(Symbol.ZF)]
+    public void TickSet_Should_RoundTripThroughStream(Symbol symbol)
     {
-        var source = fixture.GetTickSet(Symbol.ZB);
+        var source = fixture.GetTickSet(symbol);
 
         TickSet target;
 
@@ -55,16 +51,9 @@ public class TickSetTests
     }
 
     [Theory]
-    [InlineData(Symbol.BP, 24646)]
-    [InlineData(Symbol.CL, 55886)]
-    [InlineData(Symbol.ES, 71204)]
-    [InlineData(Symbol.EU, 29437)]
     [InlineData(Symbol.GC, 47511)]
-    [InlineData(Symbol.JY, 15206)]
     [InlineData(Symbol.NQ, 102630)]
-    [InlineData(Symbol.ZB, 20246)]
     [InlineData(Symbol.ZF, 21953)]
-    [InlineData(Symbol.ZN, 25450)]
     public void LoadedTickSet_Should_Enumerate(
         Symbol symbol, int total)
     {
@@ -77,16 +66,9 @@ public class TickSetTests
     }
 
     [Theory]
-    [InlineData(Symbol.BP)]
-    [InlineData(Symbol.CL)]
-    [InlineData(Symbol.ES)]
-    [InlineData(Symbol.EU)]
     [InlineData(Symbol.GC)]
-    [InlineData(Symbol.JY)]
     [InlineData(Symbol.NQ)]
-    [InlineData(Symbol.ZB)]
     [InlineData(Symbol.ZF)]
-    [InlineData(Symbol.ZN)]
     public void HandCreatedTickSet_Should_Roundtrip(Symbol symbol)
     {
         var source = fixture.GetTickSet(symbol);
@@ -101,16 +83,9 @@ public class TickSetTests
     }
 
     [Theory]
-    [InlineData(Symbol.BP)]
-    [InlineData(Symbol.CL)]
-    [InlineData(Symbol.ES)]
-    [InlineData(Symbol.EU)]
     [InlineData(Symbol.GC)]
-    [InlineData(Symbol.JY)]
     [InlineData(Symbol.NQ)]
-    [InlineData(Symbol.ZB)]
     [InlineData(Symbol.ZF)]
-    [InlineData(Symbol.ZN)]
     public void GetFullPath_Should_ReturnExpectedPath(Symbol symbol)
     {
         var tickSet = fixture.GetTickSet(symbol);

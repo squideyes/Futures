@@ -29,29 +29,29 @@ public class SwingIndicatorTests : IClassFixture<TestingFixture>
     [Fact]
     public void BaselineTest()
     {
-        //const int SWING_STRENGTH = 1;
+        const int SWING_STRENGTH = 1;
 
-        //var indicator = new SwingIndicator(SWING_STRENGTH);
+        var indicator = new SwingIndicator(SWING_STRENGTH);
 
-        //for (var i = fixture.Candles.Count - 1; i >= 0; i--)
-        //    indicator.AddAndCalc(fixture.Candles[i]);
+        var candles = fixture.GetCandleSet(Symbol.NQ);
 
-        //var results = indicator.ToList();
+        foreach (var candle in candles)
+            indicator.AddAndCalc(candle);
 
-        //results.Reverse();
+        var results = indicator.Reverse().ToArray();
 
-        //var baselines = GetBaselines();
+        var baselines = GetBaselines();
 
-        //for (var i = 0; i < results.Count; i++)
-        //{
-        //    var result = results[i];
-        //    var baseline = baselines[i];
+        for (var i = 0; i < results.Length; i++)
+        {
+            var result = results[i];
+            var baseline = baselines[i];
 
-        //    result.HighPlot.Should().Be(baseline.HighPlot);
-        //    result.HighSeries.Should().Be(baseline.HighSeries);
-        //    result.LowPlot.Should().Be(baseline.LowPlot);
-        //    result.LowSeries.Should().Be(baseline.LowSeries);
-        //}
+            result.HighPlot.Should().Be(baseline.HighPlot);
+            result.HighSeries.Should().Be(baseline.HighSeries);
+            result.LowPlot.Should().Be(baseline.LowPlot);
+            result.LowSeries.Should().Be(baseline.LowSeries);
+        }
     }
 
     private static List<Baseline> GetBaselines()
