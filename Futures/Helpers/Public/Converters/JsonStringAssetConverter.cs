@@ -8,17 +8,18 @@ using System.Text.Json.Serialization;
 
 namespace SquidEyes.Futures;
 
-internal class JsonStringTimeOnlyConverter : JsonConverter<TimeOnly>
+public class JsonStringAssetConverter : JsonConverter<Asset>
 {
-    public override TimeOnly Read(ref Utf8JsonReader reader,
+    public override Asset Read(ref Utf8JsonReader reader,
         Type _, JsonSerializerOptions options)
     {
-        return TimeOnly.Parse(reader.GetString()!);
+        return Known.Assets[
+            Enum.Parse<Symbol>(reader.GetString()!)];
     }
 
     public override void Write(Utf8JsonWriter writer,
-        TimeOnly value, JsonSerializerOptions options)
+        Asset value, JsonSerializerOptions options)
     {
-        writer.WriteStringValue(value.ToString("HH:mm:ss.fff"));
+        writer.WriteStringValue(value.ToString());
     }
 }
