@@ -91,6 +91,6 @@ public class TickSetTests
         var tickSet = fixture.GetTickSet(symbol);
 
         tickSet.GetFullPath(@"C:\\Data").Should().Be(
-            $@"C:\\Data\TickSets\{symbol}\2020\KB_{symbol}_20191216_TP_EST.stps");
+            $@"C:\\Data\Kibot\{symbol}\2020\KB_{symbol}_20191216_TP_EST.stps");
     }
 }

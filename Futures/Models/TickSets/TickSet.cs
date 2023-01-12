@@ -44,8 +44,8 @@ public class TickSet : IEnumerable<Tick>
     {
         basePath.MayNot().BeNullOrWhitespace();
 
-        return Path.Combine(basePath, Source.ToCode(),
-            Contract.Asset.ToString(), TradeDate.Year.ToString(), FileName);
+        return Path.Combine(basePath, Source.ToString(),
+            Contract.Asset.ToString(), Contract.Year.ToString(), FileName);
     }
 
     public void Add(Tick tick)
@@ -120,7 +120,7 @@ public class TickSet : IEnumerable<Tick>
 
         fields.Length.Must().Be(5);
 
-        var source = Enum.Parse<Source>(fields[0], true);
+        var source = fields[0].ToSource();
         var symbol = Enum.Parse<Symbol>(fields[1], true);
         var tradeDate = TradeDate.From(
             DateOnly.ParseExact(fields[2], "yyyyMMdd", null));
