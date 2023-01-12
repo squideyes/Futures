@@ -44,9 +44,8 @@ public class TickSet : IEnumerable<Tick>
     {
         basePath.MayNot().BeNullOrWhitespace();
 
-        return Path.Combine(basePath, "TickSets",
-            Contract.Asset.ToString(),
-            Contract.Year.ToString(), FileName);
+        return Path.Combine(basePath, Source.ToString(),
+            Contract.Asset.ToString(), Contract.Year.ToString(), FileName);
     }
 
     public void Add(Tick tick)
