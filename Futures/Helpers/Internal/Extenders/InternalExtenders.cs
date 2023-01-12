@@ -7,7 +7,7 @@ using System.Text;
 
 namespace SquidEyes.Futures;
 
-internal static class MiscExtenders
+internal static class InternalExtenders
 {
     public static R AsFunc<V, R>(this V value, Func<V, R> func) => func(value);
 
@@ -29,24 +29,6 @@ internal static class MiscExtenders
 
         if (!Directory.Exists(path))
             Directory.CreateDirectory(path!);
-    }
-
-    public static string ToCode(this Source value)
-    {
-        return value switch
-        {
-            Source.Kibot => "KB",
-            _ => throw new ArgumentOutOfRangeException(nameof(value))
-        };
-    }
-
-    public static Source ToSource(this string value)
-    {
-        return value switch
-        {
-            "KB" => Source.Kibot,
-            _ => throw new ArgumentOutOfRangeException(nameof(value))
-        };
     }
 
     public static bool IsEnumValue<T>(this T value)
