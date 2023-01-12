@@ -7,6 +7,7 @@ public static class PublicExtenders
         return value switch
         {
             Source.Kibot => "KB",
+            Source.Amp => "AMP",
             _ => throw new ArgumentOutOfRangeException(nameof(value))
         };
     }
@@ -16,6 +17,7 @@ public static class PublicExtenders
         return value switch
         {
             "KB" => Source.Kibot,
+            "AMP" => Source.Amp,
             _ => throw new ArgumentOutOfRangeException(nameof(value))
         };
     }
