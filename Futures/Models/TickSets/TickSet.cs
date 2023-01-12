@@ -113,6 +113,29 @@ public class TickSet : IEnumerable<Tick>
         Save(stream);
     }
 
+    public static TickSet Load(string fullPath)
+    {
+        var nameOnly = Path.GetFileNameWithoutExtension(fullPath);
+
+        var fields = nameOnly.Split('_');
+
+        fields.Length.Must().Be(5);
+
+        var source = Enum.Parse<Source>(fields[0], true);
+        var symbol = Enum.Parse<Symbol>(fields[1], true);
+        var tradeDate = TradeDate.From(
+            DateOnly.ParseExact(fields[2], "yyyyMMdd", null));
+
+        fields[3].Must().Be("TP");
+        fields[4].Must().Be("EST");
+
+        Path.GetExtension(fullPath).Must().Be(".stps");
+
+        using var stream = File.OpenRead(fullPath);
+
+        return From(stream);
+    }
+
     public static TickSet From(Stream stream)
     {
         stream.MayNot().BeNull();
