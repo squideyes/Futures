@@ -44,7 +44,7 @@ public class TickSet : IEnumerable<Tick>
     {
         basePath.MayNot().BeNullOrWhitespace();
 
-        return Path.Combine(basePath, Source.ToString(),
+        return Path.Combine(basePath, Source.ToCode(),
             Contract.Asset.ToString(), TradeDate.Year.ToString(), FileName);
     }
 
