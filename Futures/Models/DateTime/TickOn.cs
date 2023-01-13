@@ -68,10 +68,13 @@ public readonly struct TickOn : IEquatable<TickOn>, IComparable<TickOn>
         return value >= minValue && value <= maxValue;
     }
 
-    internal static TickOn From(DateTime value) =>
+    public static TickOn From(DateTime value, TimeSpan offset) =>
+        new(value.Add(offset).Must().Be(IsTickOnValue));
+
+    public static TickOn From(DateTime value) =>
         new(value.Must().Be(IsTickOnValue));
 
-    internal static TickOn Parse(string value) =>
+    public static TickOn Parse(string value) =>
         From(DateTime.Parse(value));
 
     public static bool TryParse(string value, out TickOn tickOn)
