@@ -26,4 +26,8 @@
 	  </None>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <PackageReference Include="SquidEyes.Fundamentals" Version="1.5.17" />
+	</ItemGroup>
+
 </Project>

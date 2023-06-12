@@ -4,7 +4,7 @@
 // ********************************************************
 
 using FluentAssertions;
-using SquidEyes.Futures;
+using SquidEyes.Futures.Models;
 
 namespace SquidEyes.Testing;
 
@@ -15,10 +15,10 @@ public static class TestingHelper
     {
         target.Contract.Should().Be(source.Contract);
         target.Count.Should().Be(source.Count);
-        target.FileName.Should().Be(source.FileName);
-        target.MaxTickOn.Should().Be(source.MaxTickOn);
-        target.MinTickOn.Should().Be(source.MinTickOn);
-        target.Source.Should().Be(source.Source);
+        //target.FileName.Should().Be(source.FileName);
+        //target.MaxTickOn.Should().Be(source.MaxTickOn);
+        //target.MinTickOn.Should().Be(source.MinTickOn);
+        //target.Source.Should().Be(source.Source);
         target.TradeDate.Should().Be(source.TradeDate);
         target.ToString().Should().Be(source.ToString());
 

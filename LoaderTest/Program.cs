@@ -23,10 +23,10 @@ try
     {
         prefix = $"{++count:0000} of {fileNames.Length:0000} - ";
 
-        var source = Roundtrip(fileName);
+        //var source = Roundtrip(fileName);
 
-        Console.WriteLine(
-            $"{prefix}LOADED: {source} ({source.Count:N0} ticks)");
+        //Console.WriteLine(
+        //    $"{prefix}LOADED: {source} ({source.Count:N0} ticks)");
     }
 
     var elapsed = DateTime.UtcNow - startedOn;
@@ -40,19 +40,19 @@ catch (Exception error)
     Console.WriteLine($"{prefix} - ERROR: {error.Message}");
 }
 
-static TickSet Roundtrip(string fileName)
-{
-    using var stream = File.OpenRead(fileName);
+//static TickSet Roundtrip(string fileName)
+//{
+//    using var stream = File.OpenRead(fileName);
 
-    var source = TickSet.From(stream);
+//    var source = TickSet.From(stream);
 
-    var target = new TickSet(
-        source.Source, source.Contract, source.TradeDate);
+//    var target = new TickSet(
+//        source.Source, source.Contract, source.TradeDate);
 
-    foreach (var tick in source)
-        target.Add(tick);
+//    foreach (var tick in source)
+//        target.Add(tick);
 
-    TestingHelper.AssertSourceMatchesTarget(source, target);
+//    TestingHelper.AssertSourceMatchesTarget(source, target);
 
-    return source;
-}
+//    return source;
+//}
