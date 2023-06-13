@@ -33,19 +33,4 @@
 		<ProjectReference Include="..\Testing\Testing.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Compile Update="Properties\Baselines.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>Baselines.resx</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <EmbeddedResource Update="Properties\Baselines.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	    <LastGenOutput>Baselines.Designer.cs</LastGenOutput>
-	  </EmbeddedResource>
-	</ItemGroup>
-
 </Project>
