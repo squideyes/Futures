@@ -10,7 +10,7 @@ public class Session : IEnumerable<TradeDate>
 
     public Session(TradeDate tradeDate, DataSpan dataSpan)
     {
-        TradeDate = tradeDate.Must().Be(TradeDateSet.Contains);
+        TradeDate = tradeDate.Must().Be(KnownTradeDates.Contains);
         DataSpan = dataSpan.Must().BeEnumValue();
 
         tradeDates.Add(tradeDate);
@@ -21,7 +21,7 @@ public class Session : IEnumerable<TradeDate>
 
             while (date.DayOfWeek <= DayOfWeek.Friday)
             {
-                if (TradeDateSet.TryGetTradeDate(date, out tradeDate))
+                if (KnownTradeDates.TryGetTradeDate(date, out tradeDate))
                     tradeDates.Add(tradeDate);
 
                 date = date.AddDays(1);

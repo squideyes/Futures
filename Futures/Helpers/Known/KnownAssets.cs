@@ -8,17 +8,30 @@ using static SquidEyes.Futures.Models.Exchange;
 
 namespace SquidEyes.Futures.Helpers;
 
-public static class AssetSet
+public static class KnownAssets
 {
-    private static readonly SortedDictionary<string, Asset> assets = new();
+    private static Dictionary<string, Asset> assets = null!;
 
-    static AssetSet()
+    private static Dictionary<string, Asset> Assets =>
+        assets ??= GetAssets().ToDictionary(v => v.Symbol);
+
+    public static int Count => Assets.Count;
+
+    public static Asset Get(string symbol) => 
+        Assets[symbol];
+
+    public static bool Contains(string symbol) =>
+        Assets.ContainsKey(symbol);
+
+    public static Asset[] GetAssets()
     {
-        static void Add(string symbol, Exchange exchange,
-            string months, float oneTick, double tickInUsd, string description)
+        var assets = new SortedSet<Asset>();
+
+        void Add(string symbol, Exchange exchange, string months, 
+            float oneTick, double tickInUsd, string description)
         {
-            assets.Add(symbol, new Asset(symbol,
-                exchange, months, oneTick, tickInUsd, description));
+            assets.Add(new Asset(symbol, exchange, 
+                months, oneTick, tickInUsd, description));
         }
 
         Add("BP", CME, "HMUZ", 0.0001f, 6.25, "BRITISH POUND");
@@ -37,19 +50,7 @@ public static class AssetSet
         Add("ZB", CBOT, "HMUZ", 0.03125f, 31.25, "30 YR US TREASURY BOND");
         Add("ZN", CBOT, "HMUZ", 0.015625f, 15.625, "10 YR US TREASURY NOTE");
         Add("ZF", CBOT, "HMUZ", 0.0078125f, 7.8125, "5 YR US TREASURY NOTE");
-    }
 
-    public static int Count => assets.Count;
-
-    public static Asset From(string symbol) => assets[symbol];
-
-    public static bool Contains(string symbol) => assets.ContainsKey(symbol);
-
-    public static Asset[] GetAll() => assets.Values.ToArray();
-
-    public static Asset[] GetFiltered(Exchange? exchange = null)
-    {
-        return assets.Values.Where(
-            a => !exchange.HasValue || a.Exchange == exchange).ToArray();
+        return assets.ToArray();
     }
 }

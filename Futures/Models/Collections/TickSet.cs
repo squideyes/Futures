@@ -14,52 +14,110 @@ public class TickSet : IEnumerable<Tick>
 {
     private readonly List<Tick> ticks = new();
 
-    public TickSet(Contract contract, DateOnly tradeDate)
+    private readonly Session session;
+
+    public TickSet(Source source,
+        Contract contract, TradeDate tradeDate)
     {
+        Source = source.Must().BeEnumValue();
+
         Contract = contract.MayNot().BeNull();
-        TradeDate = tradeDate.MayNot().BeDefault();
+
+        TradeDate = tradeDate.MayNot().BeDefault()
+            .Must().Be(Contract.TradeDates.Contains);
+
+        session = new Session(tradeDate, DataSpan.Day);
     }
 
+    public Source Source { get; }
     public Contract Contract { get; }
-    public DateOnly TradeDate { get; }
+    public TradeDate TradeDate { get; }
 
     public Asset Asset => Contract.Asset;
+
     public int Count => ticks.Count;
+
+    public string FileName
+    {
+        get
+        {
+            var sb = new StringBuilder();
+
+            sb.Append(Source.ToCode());
+            sb.AppendDelimited(Contract.Asset, '_');
+            sb.AppendDelimited(TradeDate
+                .AsDateOnly().ToString("yyyyMMdd"), '_');
+            sb.Append("_TICK_EST.stpvs");
+
+            return sb.ToString();
+        }
+    }
+
+    public string BlobName => "/" + GetPathedFileName('/');
 
     public Tick this[int index] => ticks[index];
 
-    public void Add(Tick tick) => ticks.Add(tick);
+    public void Add(Tick tick)
+    {
+        tick.MayNot().BeDefault();
+
+        if (!session.IsInSession(tick.TickOn))
+            throw new ArgumentOutOfRangeException(nameof(tick));
+
+        if (Count > 0 && tick.TickOn < ticks.Last().TickOn)
+            throw new ArgumentOutOfRangeException(nameof(tick));
+
+        ticks.Add(tick);
+    }
+
+    public string GetFullPath(string basePath)
+    {
+        basePath.MayNot().BeNullOrWhitespace();
+
+        return Path.Combine(basePath, 
+            GetPathedFileName(Path.DirectorySeparatorChar));
+    }
 
     public override string ToString() => $"{Contract} {TradeDate}";
 
-
-    public static string GetFileName(Source source,
-        Contract contract, TradeDate tradeDate, BarSpec barSpec)
+    private string GetPathedFileName(char delimiter)
     {
         var sb = new StringBuilder();
 
-        sb.Append(source.ToCode());
-        sb.AppendDelimited(contract, '_');
-        sb.AppendDelimited(tradeDate.AsDateOnly().ToString("yyyyMMdd"), '_');
-        sb.Append("T0001_EST.sts");
+        var fileName = FileName;
+
+        sb.Append(Source.ToCode());
+        sb.AppendDelimited("TICKSET", delimiter);
+        sb.AppendDelimited(Contract.Asset, delimiter);
+        sb.AppendDelimited(fileName, delimiter);
 
         return sb.ToString();
     }
 
-    public static string GetBlobName(Source source,
-        Contract contract, TradeDate tradeDate, BarSpec barSpec)
+    public static TickSet FromFileName(string fullPath)
     {
-        var sb = new StringBuilder();
+        var nameOnly = Path.GetFileNameWithoutExtension(fullPath);
 
-        var fileName = GetFileName(source, contract, tradeDate, barSpec);
+        var fields = nameOnly.Split('_');
 
-        sb.Append('/' + source.ToCode());
-        sb.AppendDelimited("TickSets", '/');
-        sb.AppendDelimited(contract.Asset, '/');
-        sb.AppendDelimited(contract, '/');
-        sb.AppendDelimited(fileName, '/');
+        fields.Length.Must().Be(5);
 
-        return sb.ToString();
+        var source = fields[0].ToSource();
+
+        var asset = KnownAssets.Get(fields[1]);
+        
+        var tradeDate = KnownTradeDates.From(
+            DateOnly.ParseExact(fields[2], "yyyyMMdd", null));
+
+        var contract = asset.GetContract(tradeDate);
+
+        fields[3].Must().Be("TICK");
+
+        fields[4].Must().Be("EST");
+
+        Path.GetExtension(fullPath).Must().Be(".stpvs");
+
+        return new TickSet(source, contract, tradeDate);
     }
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

@@ -20,9 +20,6 @@ internal static class MiscExtenders
         return Path.IsPathRooted(path);
     }
 
-    private static readonly TimeZoneInfo eastern =
-        GetTimeZoneInfo("Eastern Standard Time", "America/New_York");
-
     public static DateTime ToEasternFromUtc(this DateTime value) =>
         value.ToZoneFromUtc(eastern);
 
@@ -43,4 +40,7 @@ internal static class MiscExtenders
         else
             throw new InvalidOperationException("Only works on Linux and Windows");
     }
+
+    private static readonly TimeZoneInfo eastern =
+        GetTimeZoneInfo("Eastern Standard Time", "America/New_York");
 }

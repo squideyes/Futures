@@ -40,7 +40,7 @@ public static class JsonElementExtenders
     public static Asset GetAsset<M>(
         this JsonElement element, Expression<Func<M, Asset>> e)
     {
-        return AssetSet.From(GetElement(element, e).GetString()!);
+        return KnownAssets.Get(GetElement(element, e).GetString()!);
     }
 
     public static MultiTag GetMultiTag<M>(

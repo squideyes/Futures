@@ -3,14 +3,15 @@
 // of the MIT License (https://opensource.org/licenses/MIT)
 // ********************************************************
 
-using SquidEyes.Futures;
+using SquidEyes.Futures.Helpers;
+using SquidEyes.Futures.Models;
 using SquidEyes.Testing;
 
 var folder = Path.Combine(Environment.GetFolderPath(
     Environment.SpecialFolder.MyDocuments), "KibotData");
 
 var fileNames = Directory.GetFiles(
-    folder, "*.stps", SearchOption.AllDirectories);
+    folder, "*.stpvs", SearchOption.AllDirectories);
 
 string prefix = null!;
 
@@ -23,10 +24,10 @@ try
     {
         prefix = $"{++count:0000} of {fileNames.Length:0000} - ";
 
-        //var source = Roundtrip(fileName);
+        var source = Roundtrip(fileName);
 
-        //Console.WriteLine(
-        //    $"{prefix}LOADED: {source} ({source.Count:N0} ticks)");
+        Console.WriteLine(
+            $"{prefix}LOADED: {source} ({source.Count:N0} ticks)");
     }
 
     var elapsed = DateTime.UtcNow - startedOn;
@@ -40,19 +41,21 @@ catch (Exception error)
     Console.WriteLine($"{prefix} - ERROR: {error.Message}");
 }
 
-//static TickSet Roundtrip(string fileName)
-//{
-//    using var stream = File.OpenRead(fileName);
+static TickSet Roundtrip(string fileName)
+{
+    var source = TickSet.FromFileName(fileName);
 
-//    var source = TickSet.From(stream);
+    using var stream = File.OpenRead(fileName);
 
-//    var target = new TickSet(
-//        source.Source, source.Contract, source.TradeDate);
+    source.LoadFrom(stream);
 
-//    foreach (var tick in source)
-//        target.Add(tick);
+    var target = new TickSet(
+        source.Source, source.Contract, source.TradeDate);
 
-//    TestingHelper.AssertSourceMatchesTarget(source, target);
+    foreach (var tick in source)
+        target.Add(tick);
 
-//    return source;
-//}
+    TestingHelper.AssertSourceMatchesTarget(source, target);
+
+    return source;
+}

@@ -8,11 +8,11 @@ using SquidEyes.Fundamentals;
 
 namespace SquidEyes.Futures.Helpers;
 
-public static class TradeDateSet
+public static class KnownTradeDates
 {
     private static readonly SortedDictionary<DateOnly, TradeDate> dict = new();
 
-    static TradeDateSet()
+    static KnownTradeDates()
     {
         var holidays = HolidayHelper.GetHolidays();
 
@@ -34,11 +34,8 @@ public static class TradeDateSet
         throw new ArgumentOutOfRangeException(nameof(value));
     }
 
-    public static bool TryGetTradeDate(
-        DateOnly date, out TradeDate tradeDate)
-    {
-        return dict.TryGetValue(date, out tradeDate);
-    }
+    public static bool TryGetTradeDate(DateOnly date, out TradeDate tradeDate) =>
+        dict.TryGetValue(date, out tradeDate);
 
     public static bool TryGetPreloadDates(
         TradeDate tradeDate, int daysBack, out TradeDate[] preloadDates)
@@ -101,7 +98,7 @@ public static class TradeDateSet
             .ToArray();
     }
 
-    public static bool Contains(TradeDate value) => 
+    public static bool Contains(TradeDate value) =>
         dict.ContainsKey(value.AsDateOnly());
 
     public static bool Contains(DateOnly value) => dict.ContainsKey(value);

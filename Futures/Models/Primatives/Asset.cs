@@ -8,9 +8,9 @@ using SquidEyes.Fundamentals;
 
 namespace SquidEyes.Futures.Models;
 
-public class Asset : IEquatable<Asset>
+public class Asset : IEquatable<Asset>, IComparable<Asset>
 {
-    private static readonly Dictionary<string, Asset> assets = new();
+    private readonly Dictionary<TradeDate, Contract> contractByTradeDate = new();
 
     private readonly string format;
 
@@ -27,6 +27,14 @@ public class Asset : IEquatable<Asset>
         TicksPerPoint = (int)(1.0f / oneTick);
 
         format = "F" + Digits;
+
+        Contracts = GetContracts();
+
+        foreach (var contract in Contracts)
+        {
+            foreach (var tradeDate in contract.TradeDates)
+                contractByTradeDate.Add(tradeDate, contract);
+        }
     }
 
     public string Description { get; }
@@ -37,6 +45,10 @@ public class Asset : IEquatable<Asset>
     public string Symbol { get; }
     public double TickInUsd { get; }
     public int TicksPerPoint { get; }
+    public Contract[] Contracts { get; }
+
+    public Contract GetContract(TradeDate tradeDate) =>
+        contractByTradeDate[tradeDate];
 
     public bool IsPrice(float value) =>
         value >= OneTick && value == Round(value);
@@ -51,12 +63,6 @@ public class Asset : IEquatable<Asset>
 
     public override string ToString() => Symbol.ToString();
 
-    public static Asset[] GetAssets(Exchange? exchange = null)
-    {
-        return assets.Values.Where(
-            a => !exchange.HasValue || a.Exchange == exchange).ToArray();
-    }
-
     public bool Equals(Asset? other) =>
         other is not null && other.Equals(Symbol);
 
@@ -64,6 +70,23 @@ public class Asset : IEquatable<Asset>
         other is Asset asset && Equals(asset);
 
     public override int GetHashCode() => Symbol.GetHashCode();
+
+    public int CompareTo(Asset? other) =>
+        Symbol.CompareTo(other!.Symbol);
+
+    Contract[] GetContracts()
+    {
+        var contracts = new List<Contract>();
+
+        for (int year = Contract.MinYear;
+            year <= Contract.MaxYear; year++)
+        {
+            foreach (var month in Months!)
+                contracts.Add(new Contract(this, month, year));
+        }
+
+        return contracts.ToArray();
+    }
 
     public static bool operator ==(Asset left, Asset right)
     {

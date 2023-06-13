@@ -39,7 +39,7 @@ public partial class Contract : IEquatable<Contract>, IComparable<Contract>
 
         for (var date = prior; date < current; date = date.AddDays(1))
         {
-            if (TradeDateSet.TryGetTradeDate(date, out TradeDate tradeDate))
+            if (KnownTradeDates.TryGetTradeDate(date, out TradeDate tradeDate))
                 TradeDates.Add(tradeDate);
         }
     }
@@ -49,7 +49,7 @@ public partial class Contract : IEquatable<Contract>, IComparable<Contract>
         if (other is null)
             return false;
 
-        return AsTuple().Equals(other.AsTuple());
+        return ToString().Equals(other.ToString());
     }
 
     public override bool Equals(object? other) =>
@@ -58,12 +58,10 @@ public partial class Contract : IEquatable<Contract>, IComparable<Contract>
     override public int GetHashCode() => HashCode.Combine(Asset, Month, Year);
 
     public int CompareTo(Contract? other) =>
-        other is null ? 1 : AsTuple().CompareTo(other.AsTuple());
+        other is null ? 1 : ToString().CompareTo(other.ToString());
 
     public override string ToString() =>
-        $"{Asset}{Month.ToLetter()}{Year - 2000}";
-
-    private (Asset, Month, int) AsTuple() => (Asset, Month, Year);
+        $"{Asset}{Month.ToLetter()}{Year - 2020}";
 
     internal static Contract Parse(string value)
     {
@@ -72,7 +70,7 @@ public partial class Contract : IEquatable<Contract>, IComparable<Contract>
         if (!match.Success)
             throw new ArgumentOutOfRangeException(nameof(value));
 
-        var asset = AssetSet.From(match.Groups["S"].Value);
+        var asset = KnownAssets.Get(match.Groups["S"].Value);
         var month = match.Groups["M"].Value[0].ToMonth();
         var year = MinYear + int.Parse(match.Groups["Y"].Value);
 
@@ -89,7 +87,7 @@ public partial class Contract : IEquatable<Contract>, IComparable<Contract>
         if (!match.Success)
             return false;
 
-        return AssetSet.Contains(match.Groups["S"].Value);
+        return KnownAssets.Contains(match.Groups["S"].Value);
     }
 
     internal static DateOnly GetRollDate(Month month, int year)

@@ -5,6 +5,7 @@
 
 using SquidEyes.Futures.Models;
 using static System.DayOfWeek;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SquidEyes.Futures.Helpers;
 
@@ -12,6 +13,24 @@ public static class DateTimeExtenders
 {
     private static readonly DateTime epoch =
         new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+    public static DateOnly ToPotentialTradeDateValue(this DateTime value)
+    {
+        if (value.Hour >= 18)
+            return DateOnly.FromDateTime(value.Date.AddDays(1));
+        else
+            return DateOnly.FromDateTime(value.Date);
+    }
+
+    public static bool IsTickOn(this DateTime value)
+    {
+        var date = value.ToPotentialTradeDateValue();
+
+        if (!KnownTradeDates.TryGetTradeDate(date, out var tradeDate))
+            return false;
+
+        return tradeDate.IsTickOn(value);
+    }
 
     public static int ToUnixTime(this DateTime value) =>
         (int)value.Subtract(epoch).TotalSeconds;

@@ -1,129 +1,115 @@
-﻿//// ********************************************************
-//// The use of this source code is licensed under the terms
-//// of the MIT License (https://opensource.org/licenses/MIT)
-//// ********************************************************
+﻿// ********************************************************
+// The use of this source code is licensed under the terms
+// of the MIT License (https://opensource.org/licenses/MIT)
+// ********************************************************
 
-//using SquidEyes.Futures;
-//using SquidEyes.Futures.Models;
+using SquidEyes.Futures;
+using SquidEyes.Futures.Models;
+using SquidEyes.Futures.Helpers;
 
-//namespace SquidEyes.TickSetMaker;
+namespace SquidEyes.TickSetMaker;
+internal static class KibotParser
+{
+    public static void ParseAndSave(string source, string target, List<string> symbols)
+    {
+        var total = GetTotal(symbols);
 
-//using Lookup = Dictionary<Symbol, Dictionary<TradeDate, Contract>>;
+        int count = 0;
 
-//internal static class KibotParser
-//{
-//    public static void ParseAndSave(
-//        string source, string target, List<Symbol> symbols)
-//    {
-//        var (lookup, total) = GetLookupAndTotal(symbols);
+        foreach (var symbol in symbols)
+        {
+            var asset = KnownAssets.Get(symbol);
 
-//        int count = 0;
+            var kibotSymbol = KnownSymbols.Get(Source.KibotHistory, asset);
 
-//        foreach (var symbol in symbols)
-//        {
-//            var asset = Known.Assets[symbol];
+            var fileName = Path.Join(source, kibotSymbol + ".txt");
 
-//            var contracts = Known.Contracts[asset];
+            using var reader = new StreamReader(fileName);
 
-//            var kibotSymbol = Known.SymbolAs[Source.Kibot, symbol];
+            TickSet tickSet = null!;
 
-//            var fileName = Path.Join(source, kibotSymbol + ".txt");
+            string line;
 
-//            using var reader = new StreamReader(fileName);
+            void NewTickSet(Contract contract, TradeDate tradeDate) =>
+                tickSet = new TickSet(Source.KibotHistory, contract, tradeDate);
 
-//            TickSet tickSet = null!;
+            while ((line = reader.ReadLine()!) != null)
+            {
+                var fields = line.Split(',');
 
-//            int tickId = 0;
+                var tickOn = DateTime.Parse(fields[0]);
 
-//            string line;
+                var date = tickOn.ToPotentialTradeDateValue();
 
-//            void NewTickSet(Contract contract, TradeDate tradeDate)
-//            {
-//                tickSet = new TickSet(Source.Kibot, contract, tradeDate);
+                if (!KnownTradeDates.TryGetTradeDate(date, out TradeDate tradeDate))
+                    continue;
 
-//                tickId = 0;
-//            }
+                if (!tradeDate.IsTickOn(tickOn))
+                    continue;
 
-//            while ((line = reader.ReadLine()!) != null)
-//            {
-//                var fields = line.Split(',');
+                var contract = asset.GetContract(tradeDate);
 
-//                if (!TickOn.TryParse(fields[0], out TickOn tickOn))
-//                    continue;
+                var price = float.Parse(fields[1]);
 
-//                var tradeDate = tickOn.AsTradeDate();
+                var volume = int.Parse(fields[2]);
 
-//                if (!lookup[symbol].TryGetValue(tradeDate, out Contract? contract))
-//                    continue;
+                var tick = Tick.From(tickOn, price, volume);
 
-//                var price = float.Parse(fields[1]);
+                if (tickSet == null)
+                {
+                    NewTickSet(contract, tradeDate);
+                }
+                else if (tickSet.TradeDate < tradeDate)
+                {
+                    var prefix = $"{++count:0000} of {total:0000} - ";
 
-//                var tick = Tick.From(asset, tickId++, tickOn, price);
+                    var fullPath = tickSet.GetFullPath(target);
 
-//                if (tickSet == null)
-//                {
-//                    NewTickSet(contract, tradeDate);
-//                }
-//                else if (tickSet.TradeDate < tradeDate)
-//                {
-//                    var prefix = $"{++count:0000} of {total:0000} - ";
+                    if (File.Exists(fullPath))
+                    {
+                        Console.WriteLine($"{prefix}SKIPPED {tickSet}");
+                    }
+                    else
+                    {
+                        tickSet.SaveTo(target);
 
-//                    var fullPath = tickSet.GetFullPath(target);
+                        Console.WriteLine($"{prefix}SAVED {tickSet} ({tickSet.Count:N0} Ticks)");
+                    }
 
-//                    if (File.Exists(fullPath))
-//                    {
-//                        Console.WriteLine($"{prefix}SKIPPED {tickSet}");
-//                    }
-//                    else
-//                    {
-//                        tickSet.Save(target);
+                    NewTickSet(contract, tradeDate);
+                }
+                else if (tickSet.TradeDate > tradeDate)
+                {
+                    throw new InvalidDataException(
+                        "An out of order tick was found!");
+                }
 
-//                        Console.WriteLine($"{prefix}SAVED {tickSet} ({tickSet.Count:N0} Ticks)");
-//                    }
+                tickSet!.Add(tick);
+            }
+        }
+    }
 
-//                    NewTickSet(contract, tradeDate);
-//                }
-//                else if (tickSet.TradeDate > tradeDate)
-//                {
-//                    throw new InvalidDataException("An out of order tick was found!");
-//                }
+    private static int GetTotal(List<string> symbols)
+    {
+        int total = 0;
 
-//                tickSet!.Add(tick);
-//            }
-//        }
-//    }
+        var maxDate = DateOnly.FromDateTime(
+            DateTime.UtcNow.ToEasternFromUtc().Date).AddDays(-1);
 
-//    private static (Lookup, int) GetLookupAndTotal(List<Symbol> symbols)
-//    {
-//        var lookup = new Lookup();
+        foreach (var symbol in symbols)
+        {
+            var contracts = KnownAssets.Get(symbol).Contracts;
 
-//        int total = 0;
+            foreach (var contract in contracts)
+            {
+                if (contract.TradeDates.Last().AsDateOnly() >= maxDate)
+                    break;
 
-//        var yesterday = TradeDate.From(DateOnly.FromDateTime(
-//            DateTime.UtcNow.ToEasternFromUtc().AddDays(-1)));
+                foreach (var tradeDate in contract.TradeDates)
+                    total++;
+            }
+        }
 
-//        foreach (var symbol in symbols)
-//        {
-//            lookup.Add(symbol, new Dictionary<TradeDate, Contract>());
-
-//            var contracts = Known.Contracts[Known.Assets[symbol]];
-
-//            var dict = new Dictionary<TradeDate, Contract>();
-
-//            foreach (var contract in contracts)
-//            {
-//                if (contract.TradeDates.Last() > yesterday)
-//                    break;
-
-//                foreach (var tradeDate in contract.TradeDates)
-//                {
-//                    total++;
-
-//                    lookup[symbol].Add(tradeDate, contract);
-//                }
-//            }
-//        }
-
-//        return (lookup, total);
-//    }
-//}
+        return total;
+    }
+}
