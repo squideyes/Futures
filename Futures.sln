@@ -9,16 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\Unit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TickSetMaker", "TickSetMaker\TickSetMaker.csproj", "{5B7642FC-09EF-4104-B67D-242A0E33448A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{C11C5D5E-6F96-49B7-99AB-A1D98D088F57}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{C11C5D5E-6F96-49B7-99AB-A1D98D088F57}"
 	ProjectSection(SolutionItems) = preProject
-		CONTRIBUTING.md = CONTRIBUTING.md
 		Futures.sln.headertext = Futures.sln.headertext
-		LICENSE.md = LICENSE.md
-		.github\workflows\nuget.yml = .github\workflows\nuget.yml
-		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{BBBB384B-5A82-4E4C-B949-9580632959D6}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Code", "Code", "{BBBB384B-5A82-4E4C-B949-9580632959D6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{FA58A071-6CCA-4404-88FF-E58CFE0B4C10}"
 EndProject
@@ -27,6 +23,24 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoaderTest", "LoaderTest\LoaderTest.csproj", "{2536737E-6087-4B5F-993C-D54CB3D2CB03}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testing", "Testing\Testing.csproj", "{0970E467-72A0-473F-8A2C-63F1CED8B41E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflows", "Workflows", "{B9B15821-961B-4708-8C6E-AD1A08C118D0}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\ci.yml = .github\workflows\ci.yml
+		.github\workflows\release.yml = .github\workflows\release.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{9EF557C8-88F4-471F-A2EA-8850A95FBF12}"
+	ProjectSection(SolutionItems) = preProject
+		CONTRIBUTING.md = CONTRIBUTING.md
+		LICENSE.md = LICENSE.md
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{13ED9DF9-E4D4-48D2-A861-3CD82F8A0BE5}"
+	ProjectSection(SolutionItems) = preProject
+		Futures.sln.headertext = Futures.sln.headertext
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -64,6 +78,9 @@ Global
 		{5B7642FC-09EF-4104-B67D-242A0E33448A} = {FA58A071-6CCA-4404-88FF-E58CFE0B4C10}
 		{2536737E-6087-4B5F-993C-D54CB3D2CB03} = {D3B5AF16-1AA9-4364-9BDF-3CDE5DFC7FCB}
 		{0970E467-72A0-473F-8A2C-63F1CED8B41E} = {BBBB384B-5A82-4E4C-B949-9580632959D6}
+		{B9B15821-961B-4708-8C6E-AD1A08C118D0} = {C11C5D5E-6F96-49B7-99AB-A1D98D088F57}
+		{9EF557C8-88F4-471F-A2EA-8850A95FBF12} = {C11C5D5E-6F96-49B7-99AB-A1D98D088F57}
+		{13ED9DF9-E4D4-48D2-A861-3CD82F8A0BE5} = {C11C5D5E-6F96-49B7-99AB-A1D98D088F57}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B6A613A2-FAA4-4B4E-9F0E-DF9F934B32A0}

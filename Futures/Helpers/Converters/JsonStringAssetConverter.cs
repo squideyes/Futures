@@ -1,4 +1,9 @@
-﻿using SquidEyes.Futures.Models;
+// ********************************************************
+// The use of this source code is licensed under the terms
+// of the MIT License (https://opensource.org/licenses/MIT)
+// ********************************************************
+
+using SquidEyes.Futures.Models;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
