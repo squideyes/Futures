@@ -118,13 +118,34 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="KB_GC_20191216_TP_EST" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\testdata\kb_gc_20191216_tp_est.stps;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="KBH_BP_20191216_TICK_EST" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\TestData\KBH_BP_20191216_TICK_EST.stpvs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="KB_NQ_20191216_TP_EST" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\testdata\kb_nq_20191216_tp_est.stps;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="KBH_CL_20191216_TICK_EST" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\TestData\KBH_CL_20191216_TICK_EST.stpvs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="KB_ZF_20191216_TP_EST" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\testdata\kb_zf_20191216_tp_est.stps;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="KBH_ES_20191216_TICK_EST" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\TestData\KBH_ES_20191216_TICK_EST.stpvs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="KBH_EU_20191216_TICK_EST" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\TestData\KBH_EU_20191216_TICK_EST.stpvs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="KBH_GC_20191216_TICK_EST" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\TestData\KBH_GC_20191216_TICK_EST.stpvs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="KBH_JY_20191216_TICK_EST" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\TestData\KBH_JY_20191216_TICK_EST.stpvs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="KBH_NQ_20191216_TICK_EST" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\TestData\KBH_NQ_20191216_TICK_EST.stpvs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="KBH_ZB_20191216_TICK_EST" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\TestData\KBH_ZB_20191216_TICK_EST.stpvs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="KBH_ZF_20191216_TICK_EST" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\TestData\KBH_ZF_20191216_TICK_EST.stpvs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="KBH_ZN_20191216_TICK_EST" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\TestData\KBH_ZN_20191216_TICK_EST.stpvs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

@@ -3,7 +3,6 @@
 // of the MIT License (https://opensource.org/licenses/MIT)
 // ********************************************************
 
-using SquidEyes.Futures.Helpers;
 using SquidEyes.Futures.Models;
 using SquidEyes.Testing;
 
@@ -43,13 +42,9 @@ catch (Exception error)
 
 static TickSet Roundtrip(string fileName)
 {
-    var source = TickSet.FromFileName(fileName);
+    var source = TickSet.LoadFrom(fileName);
 
-    using var stream = File.OpenRead(fileName);
-
-    source.LoadFrom(stream);
-
-    var target = new TickSet(
+    var target = TickSet.Create(
         source.Source, source.Contract, source.TradeDate);
 
     foreach (var tick in source)

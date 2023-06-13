@@ -1,10 +1,12 @@
-﻿//********************************************************
-//The use of this source code is licensed under the terms
-// of the MIT License (https://opensource.org/licenses/MIT)
-// ********************************************************
+﻿////********************************************************
+////The use of this source code is licensed under the terms
+//// of the MIT License (https://opensource.org/licenses/MIT)
+//// ********************************************************
 
 //using FluentAssertions;
 //using SquidEyes.Futures;
+//using SquidEyes.Futures.Helpers;
+//using SquidEyes.Futures.Models;
 
 //namespace SquidEyes.UnitTests;
 
@@ -13,8 +15,8 @@
 //    [Fact]
 //    public void Session_WithGoodFromArgs_Should_Construct()
 //    {
-//        var asset = Known.Assets[Symbol.ES];
-//        var tradeDate = TradeDate.From(2021, 12, 13);
+//        var asset = KnownAssets.Get("ES");
+//        var tradeDate = KnownTradeDates.From(new DateOnly(2021, 12, 13));
 
 //        var session = Session.From(asset, tradeDate, 5, 10, 15);
 

@@ -3,13 +3,12 @@
 // of the MIT License (https://opensource.org/licenses/MIT)
 // ********************************************************
 
-using SquidEyes.Futures.Helpers;
-using SquidEyes.Futures.Models;
 using SquidEyes.Fundamentals;
+using SquidEyes.Futures.Helpers;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace SquidEyes.Futures;
+namespace SquidEyes.Futures.Models;
 
 public partial class Contract : IEquatable<Contract>, IComparable<Contract>
 {

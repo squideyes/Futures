@@ -64,7 +64,7 @@ public class Asset : IEquatable<Asset>, IComparable<Asset>
     public override string ToString() => Symbol.ToString();
 
     public bool Equals(Asset? other) =>
-        other is not null && other.Equals(Symbol);
+        other is not null && other.Symbol.Equals(Symbol);
 
     public override bool Equals(object? other) =>
         other is Asset asset && Equals(asset);

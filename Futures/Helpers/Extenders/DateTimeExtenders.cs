@@ -4,16 +4,11 @@
 // ********************************************************
 
 using SquidEyes.Futures.Models;
-using static System.DayOfWeek;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SquidEyes.Futures.Helpers;
 
 public static class DateTimeExtenders
 {
-    private static readonly DateTime epoch =
-        new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
     public static DateOnly ToPotentialTradeDateValue(this DateTime value)
     {
         if (value.Hour >= 18)
@@ -31,15 +26,6 @@ public static class DateTimeExtenders
 
         return tradeDate.IsTickOn(value);
     }
-
-    public static int ToUnixTime(this DateTime value) =>
-        (int)value.Subtract(epoch).TotalSeconds;
-
-    public static bool IsWeekend(this DateOnly value) =>
-        value.DayOfWeek == Saturday || value.DayOfWeek == Sunday;
-
-    public static bool IsWeekday(this DateOnly value) =>
-        value.DayOfWeek >= Monday && value.DayOfWeek <= Friday;
 
     public static string ToText(this DateTime value, DateTimeFormat format)
     {

@@ -3,11 +3,11 @@
 // of the MIT License (https://opensource.org/licenses/MIT)
 // ********************************************************
 
-using SquidEyes.Futures;
 using SquidEyes.Futures.Models;
 using SquidEyes.Futures.Helpers;
 
 namespace SquidEyes.TickSetMaker;
+
 internal static class KibotParser
 {
     public static void ParseAndSave(string source, string target, List<string> symbols)
@@ -30,8 +30,11 @@ internal static class KibotParser
 
             string line;
 
-            void NewTickSet(Contract contract, TradeDate tradeDate) =>
-                tickSet = new TickSet(Source.KibotHistory, contract, tradeDate);
+            void NewTickSet(Contract contract, TradeDate tradeDate)
+            {
+                tickSet = TickSet.Create(
+                    Source.KibotHistory, contract, tradeDate);
+            }
 
             while ((line = reader.ReadLine()!) != null)
             {
@@ -41,8 +44,11 @@ internal static class KibotParser
 
                 var date = tickOn.ToPotentialTradeDateValue();
 
-                if (!KnownTradeDates.TryGetTradeDate(date, out TradeDate tradeDate))
+                if (!KnownTradeDates.TryGetTradeDate(
+                    date, out TradeDate tradeDate))
+                {
                     continue;
+                }
 
                 if (!tradeDate.IsTickOn(tickOn))
                     continue;

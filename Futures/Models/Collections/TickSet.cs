@@ -7,6 +7,7 @@ using SquidEyes.Futures.Helpers;
 using SquidEyes.Fundamentals;
 using System.Collections;
 using System.Text;
+using System.IO.Compression;
 
 namespace SquidEyes.Futures.Models;
 
@@ -16,15 +17,11 @@ public class TickSet : IEnumerable<Tick>
 
     private readonly Session session;
 
-    public TickSet(Source source,
-        Contract contract, TradeDate tradeDate)
+    private TickSet(Source source, Contract contract, TradeDate tradeDate)
     {
-        Source = source.Must().BeEnumValue();
-
-        Contract = contract.MayNot().BeNull();
-
-        TradeDate = tradeDate.MayNot().BeDefault()
-            .Must().Be(Contract.TradeDates.Contains);
+        Source = source;
+        Contract = contract;
+        Contract = contract;
 
         session = new Session(tradeDate, DataSpan.Day);
     }
@@ -60,12 +57,8 @@ public class TickSet : IEnumerable<Tick>
     public void Add(Tick tick)
     {
         tick.MayNot().BeDefault();
-
-        if (!session.IsInSession(tick.TickOn))
-            throw new ArgumentOutOfRangeException(nameof(tick));
-
-        if (Count > 0 && tick.TickOn < ticks.Last().TickOn)
-            throw new ArgumentOutOfRangeException(nameof(tick));
+        tick.TickOn.Must().Be(session.IsInSession);
+        tick.Must().Be(v => Count == 0 || v.TickOn < ticks.Last().TickOn);
 
         ticks.Add(tick);
     }
@@ -74,11 +67,60 @@ public class TickSet : IEnumerable<Tick>
     {
         basePath.MayNot().BeNullOrWhitespace();
 
-        return Path.Combine(basePath, 
+        return Path.Combine(basePath,
             GetPathedFileName(Path.DirectorySeparatorChar));
     }
 
     public override string ToString() => $"{Contract} {TradeDate}";
+
+    public void SaveTo(Stream stream)
+    {
+        stream.MayNot().BeNull();
+
+        using var dataStream = new MemoryStream();
+
+        var writer = new BinaryWriter(dataStream, Encoding.UTF8, true);
+
+        writer.Write(Source.ToCode());
+        writer.Write(Contract.ToString());
+        writer.Write(TradeDate.DayNumber);
+        writer.Write(Count);
+
+        foreach (var tick in this)
+        {
+            writer.Write((int)(tick.TickOn -
+                TradeDate.MinTickOn).TotalMilliseconds);
+
+            writer.Write(tick.Price);
+
+            writer.Write(tick.Volume);
+        }
+
+        writer.Flush();
+
+        dataStream.Position = 0;
+
+        using var gzip = new GZipStream(
+            stream, CompressionLevel.SmallestSize, true);
+
+        dataStream.CopyTo(gzip);
+    }
+
+    public void SaveTo(string basePath)
+    {
+        basePath.MayNot().BeNullOrWhitespace();
+
+        var fullPath = GetFullPath(basePath);
+
+        var directory = Path.GetDirectoryName(fullPath);
+
+        if (!Directory.Exists(directory))
+            Directory.CreateDirectory(directory!);
+
+        using var stream = File.OpenWrite(fullPath);
+
+        SaveTo(stream);
+    }
 
     private string GetPathedFileName(char delimiter)
     {
@@ -94,7 +136,66 @@ public class TickSet : IEnumerable<Tick>
         return sb.ToString();
     }
 
-    public static TickSet FromFileName(string fullPath)
+    public static TickSet Create(
+        Source source, Contract contract, TradeDate tradeDate)
+    {
+        source.Must().BeEnumValue();
+
+        contract.MayNot().BeNull();
+
+        tradeDate.MayNot().BeDefault()
+            .Must().Be(contract.TradeDates.Contains);
+
+        return new TickSet(source, contract, tradeDate);
+    }
+
+    public static TickSet LoadFrom(string fullPath)
+    {
+        using var stream = File.OpenRead(fullPath);
+
+        return LoadFrom(stream);
+    }
+
+    public static TickSet LoadFrom(Stream stream)
+    {
+        stream.MayNot().BeNull();
+
+        using var dataStream = new MemoryStream();
+
+        using (var gzip = new GZipStream(stream, CompressionMode.Decompress))
+            gzip.CopyTo(dataStream);
+
+        dataStream.Position = 0;
+
+        var reader = new BinaryReader(dataStream, Encoding.UTF8, true);
+
+        var source = reader.ReadString().ToSource();
+
+        var contract = Contract.Parse(reader.ReadString());
+
+        var tradeDate = KnownTradeDates.From(
+            DateOnly.FromDayNumber(reader.ReadInt32()));
+
+        var count = reader.ReadInt32();
+
+        var tickSet = new TickSet(source, contract, tradeDate);
+
+        for (var i = 0; i < count; i++)
+        {
+            var tickOn = tradeDate.MinTickOn
+                .AddMilliseconds(reader.ReadInt32());
+
+            var price = reader.ReadSingle();
+
+            var volume = reader.ReadInt32();
+
+            tickSet.Add(new Tick(tickOn, price, volume));
+        }
+
+        return tickSet;
+    }
+
+    public static TickSet EmptyFrom(string fullPath)
     {
         var nameOnly = Path.GetFileNameWithoutExtension(fullPath);
 
@@ -105,7 +206,7 @@ public class TickSet : IEnumerable<Tick>
         var source = fields[0].ToSource();
 
         var asset = KnownAssets.Get(fields[1]);
-        
+
         var tradeDate = KnownTradeDates.From(
             DateOnly.ParseExact(fields[2], "yyyyMMdd", null));
 
