@@ -4,10 +4,10 @@
 		<TargetFramework>net7.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<AssemblyName>SquidEyes.Futures</AssemblyName>
-		<RootNamespace>SquidEyes.Futures</RootNamespace>
+		<AssemblyName>SquidEyes.$(MSBuildProjectName)</AssemblyName>
+		<RootNamespace>SquidEyes.$(MSBuildProjectName)</RootNamespace>
 		<Company>SquidEyes, LLC</Company>
-		<Copyright>Copyright 2022 by SquidEyes, LLC</Copyright>
+		<Copyright>Copyright 2023 by SquidEyes, LLC</Copyright>
 		<Description>Futures trading primitives, helper classes, extension methods</Description>
 		<Authors>Louis S. Berman</Authors>
 		<PackageTags>futures;c#</PackageTags>
@@ -17,7 +17,14 @@
 		<RepositoryUrl>https://github.com/squideyes/Futures</RepositoryUrl>
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<PackageIcon>Icon.jpg</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
+	
+    <ItemGroup>
+        <None Include="Icon.jpg" Pack="True" PackagePath="\" />
+        <None Include="..\README.md" Pack="true" PackagePath="\" />
+    </ItemGroup>	
 
 	<ItemGroup>
 	  <PackageReference Include="SquidEyes.Fundamentals" Version="1.5.17" />
